@@ -31,6 +31,9 @@
     <Filter Include="Header Files\szl">
       <UniqueIdentifier>{a2c020fe-0cd4-4dc3-b67d-bbb2477c4bb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\tracker">
+      <UniqueIdentifier>{68e8ef55-4c44-4fad-b814-7c30654dd466}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="demo.cpp">
@@ -63,9 +66,13 @@
     <ClCompile Include="modules\view\double_view.cpp">
       <Filter>Source Files\startup</Filter>
     </ClCompile>
+    <ClCompile Include="modules\tracker\single_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="dnn_model_2_0.onnx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\szl\single_startup.h">
@@ -75,6 +82,9 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\double_view.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\single_tracker.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include "szl/single_startup.h"
 #include "szl/single_view.h"
 #include "szl/double_view.h"
+#include "szl/single_tracker.h"
 
 int main()
 {
@@ -17,10 +18,12 @@ int main()
 		cout << "-----------------------------------------" << endl;
 		cout << "Kinect Console Application" << endl << endl;
 		cout << "Please enter the operation to perform: " << endl;
-		cout << "0: test single kinect's startup." << endl;
-		cout << "1: open single kinect's viewer." << endl;
-		cout << "2: open two kinect's viewer." << endl;
-		cout << "q: quit." << endl;
+		cout << "0: to test single kinect's startup." << endl;
+		cout << "1: to open single kinect's viewer." << endl;
+		cout << "2: to open two kinect's viewer." << endl;
+		cout << "3: to test single kinect's tracker(simple information)." << endl;
+		cout << "4: to test single kinect's tracker(detailed information)." << endl;
+		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
 		if (oper == 'q') {
@@ -38,6 +41,14 @@ int main()
 		else if (oper == '2') {
 			DoubleView kinect;
 			kinect.Show();
+		}
+		else if (oper == '3') {
+			SingleTracker kinect;
+			kinect.RunWithSimpleInformation();
+		}
+		else if (oper == '4') {
+			SingleTracker kinect;
+			kinect.RunWithDetailedInformation();
 		}
 		else {
 			cout << "******************************************" << endl;
