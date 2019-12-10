@@ -1,6 +1,8 @@
+# user-defined...
 kinect_tracker/.vs/
 kinect_tracker/packages/
 x64/
+kinect_tracker/demo/save/
 
 # Prerequisites
 *.d
@@ -28,7 +30,6 @@ x64/
 *.lai
 *.la
 *.a
-
 
 # Executables
 *.exe

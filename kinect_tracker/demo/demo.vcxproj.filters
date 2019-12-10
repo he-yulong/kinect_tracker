@@ -63,16 +63,20 @@
     <ClCompile Include="modules\third_party\forestsen\StaticImageProperties.cpp">
       <Filter>Source Files\forestsen</Filter>
     </ClCompile>
-    <ClCompile Include="modules\view\double_view.cpp">
-      <Filter>Source Files\startup</Filter>
-    </ClCompile>
     <ClCompile Include="modules\tracker\single_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\view\double_view.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\tracker\single_tracker_recorder.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="dnn_model_2_0.onnx" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\szl\single_startup.h">
@@ -85,6 +89,9 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\single_tracker.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\single_tracker_recorder.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #include "szl/single_tracker.h"
+using szl_kinect::SingleTracker;
 
 #include <iostream>
 using namespace std;

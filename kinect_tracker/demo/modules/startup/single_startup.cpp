@@ -1,4 +1,5 @@
 #include "szl/single_startup.h"
+using szl_kinect::SingleStartup;
 
 #include <k4a/k4a.h>
 

@@ -1,4 +1,5 @@
 #include "szl/single_view.h"
+using szl_kinect::SingleView;
 
 #include <iostream>
 #include <vector>

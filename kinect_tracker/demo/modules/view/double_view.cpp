@@ -1,4 +1,5 @@
 #include "szl/double_view.h"
+using szl_kinect::DoubleView;
 
 #include <k4a/k4a.hpp>
 
