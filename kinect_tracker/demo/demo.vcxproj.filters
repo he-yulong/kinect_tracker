@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\view">
+      <UniqueIdentifier>{6e993321-4fb5-4d6c-8c05-df21b4970eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\startup">
+      <UniqueIdentifier>{ca4fad61-4674-47de-bcfd-9eadef617171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\imgui">
+      <UniqueIdentifier>{0410372d-9a81-42f6-a779-381774931855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\k4a_opengl">
+      <UniqueIdentifier>{f7dea3d9-d0c0-42c3-be93-c1b7304c6685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\forestsen">
+      <UniqueIdentifier>{5010daab-14a6-492a-920b-f6f724899521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\szl">
+      <UniqueIdentifier>{a2c020fe-0cd4-4dc3-b67d-bbb2477c4bb0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\view\single_view.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\startup\single_startup.cpp">
+      <Filter>Source Files\startup</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\third_party\imgui\imgui.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\third_party\imgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\third_party\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\third_party\k4a_opengl\texture.cpp">
+      <Filter>Source Files\k4a_opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\third_party\k4a_opengl\viewerwindow.cpp">
+      <Filter>Source Files\k4a_opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\third_party\forestsen\StaticImageProperties.cpp">
+      <Filter>Source Files\forestsen</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\view\double_view.cpp">
+      <Filter>Source Files\startup</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\szl\single_startup.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\single_view.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\double_view.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

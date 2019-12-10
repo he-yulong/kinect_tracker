@@ -1,3 +1,7 @@
+kinect_tracker/.vs/
+kinect_tracker/packages/
+x64/
+
 # Prerequisites
 *.d
 
