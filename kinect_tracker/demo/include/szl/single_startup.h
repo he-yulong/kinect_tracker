@@ -1,7 +1,10 @@
 #pragma once
-class SingleStartup
-{
-public:
-	int Run();
-};
+namespace szl_kinect {
+	class SingleStartup
+	{
+	public:
+		int Run();
+	};
+}
+
 

@@ -1,17 +1,20 @@
 // demo.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
 
 #include "szl/single_startup.h"
+using szl_kinect::SingleStartup;
 #include "szl/single_view.h"
+using szl_kinect::SingleView;
 #include "szl/double_view.h"
+using szl_kinect::DoubleView;
 #include "szl/single_tracker.h"
+using szl_kinect::SingleTracker;
 
 int main()
 {
-	using namespace std;
-
 	char oper;
 	while (true)
 	{

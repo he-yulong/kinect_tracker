@@ -1,6 +1,9 @@
 #pragma once
-class DoubleView
-{
-public:
-	int Show();
-};
+namespace szl_kinect {
+	class DoubleView
+	{
+	public:
+		int Show();
+	};
+}
+

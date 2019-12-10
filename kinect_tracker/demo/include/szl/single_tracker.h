@@ -1,7 +1,10 @@
 #pragma once
-class SingleTracker
-{
-public:
-	int RunWithSimpleInformation();
-	int RunWithDetailedInformation();
-};
+namespace szl_kinect {
+	class SingleTracker
+	{
+	public:
+		int RunWithSimpleInformation();
+		int RunWithDetailedInformation();
+	};
+
+}
