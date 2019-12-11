@@ -3,6 +3,7 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::string;
 
 #include "szl/single_startup.h"
 using szl_kinect::SingleStartup;
@@ -14,6 +15,8 @@ using szl_kinect::DoubleView;
 using szl_kinect::SingleTracker;
 #include "szl/single_tracker_recorder.h"
 using szl_kinect::SingleTrackerRecorder;
+#include "szl/single_body_tracker.h"
+using szl_kinect::SingleBodyTracker;
 
 int main()
 {
@@ -29,6 +32,7 @@ int main()
 		cout << "3: to test single kinect's tracker(simple information)." << endl;
 		cout << "4: to test single kinect's tracker(detailed information)." << endl;
 		cout << "5: to save images and tracking data in the save directory(baoliqiang)." << endl;
+		cout << "6: to send tracking data using udp(baoliqiang)." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -59,6 +63,10 @@ int main()
 		else if (oper == '5') {
 			SingleTrackerRecorder kinect;
 			kinect.Save();
+		}
+		else if (oper == '6') {
+			SingleBodyTracker kinect;
+			kinect.Run("127.0.0.1", 8999, true);
 		}
 		else {
 			cout << "******************************************" << endl;

@@ -34,6 +34,9 @@
     <Filter Include="Source Files\tracker">
       <UniqueIdentifier>{68e8ef55-4c44-4fad-b814-7c30654dd466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\network">
+      <UniqueIdentifier>{e8489267-1e08-4bd9-b609-7f82f53e3fb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="demo.cpp">
@@ -72,6 +75,15 @@
     <ClCompile Include="modules\tracker\single_tracker_recorder.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
+    <ClCompile Include="modules\network\udp_sender.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\tracker\single_skeleton_processor.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\tracker\single_body_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -92,6 +104,15 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\single_tracker_recorder.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\udp_sender.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\single_skeleton_processor.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\single_body_tracker.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

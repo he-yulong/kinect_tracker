@@ -96,7 +96,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -114,7 +114,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -134,7 +134,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -156,7 +156,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="demo.cpp" />
+    <ClCompile Include="modules\network\udp_sender.cpp" />
     <ClCompile Include="modules\startup\single_startup.cpp" />
     <ClCompile Include="modules\third_party\forestsen\StaticImageProperties.cpp" />
     <ClCompile Include="modules\third_party\imgui\imgui.cpp" />
@@ -179,6 +180,8 @@
     <ClCompile Include="modules\third_party\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="modules\third_party\k4a_opengl\texture.cpp" />
     <ClCompile Include="modules\third_party\k4a_opengl\viewerwindow.cpp" />
+    <ClCompile Include="modules\tracker\single_body_tracker.cpp" />
+    <ClCompile Include="modules\tracker\single_skeleton_processor.cpp" />
     <ClCompile Include="modules\tracker\single_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_tracker_recorder.cpp" />
     <ClCompile Include="modules\view\double_view.cpp" />
@@ -190,10 +193,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\szl\double_view.h" />
+    <ClInclude Include="include\szl\single_body_tracker.h" />
+    <ClInclude Include="include\szl\single_skeleton_processor.h" />
     <ClInclude Include="include\szl\single_startup.h" />
     <ClInclude Include="include\szl\single_tracker.h" />
     <ClInclude Include="include\szl\single_tracker_recorder.h" />
     <ClInclude Include="include\szl\single_view.h" />
+    <ClInclude Include="include\szl\udp_sender.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -201,6 +207,8 @@
     <Import Project="..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.targets" Condition="Exists('..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.targets')" />
     <Import Project="..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.targets" Condition="Exists('..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.targets')" />
     <Import Project="..\packages\Microsoft.Azure.Kinect.BodyTracking.0.9.5\build\native\Microsoft.Azure.Kinect.BodyTracking.targets" Condition="Exists('..\packages\Microsoft.Azure.Kinect.BodyTracking.0.9.5\build\native\Microsoft.Azure.Kinect.BodyTracking.targets')" />
+    <Import Project="..\packages\Eigen.3.3.3\build\native\Eigen.targets" Condition="Exists('..\packages\Eigen.3.3.3\build\native\Eigen.targets')" />
+    <Import Project="..\packages\boost.1.71.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.71.0.0\build\boost.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -210,5 +218,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.0.9.1\build\native\Microsoft.Azure.Kinect.BodyTracking.Dependencies.cuDNN.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Azure.Kinect.BodyTracking.0.9.5\build\native\Microsoft.Azure.Kinect.BodyTracking.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.Kinect.BodyTracking.0.9.5\build\native\Microsoft.Azure.Kinect.BodyTracking.targets'))" />
+    <Error Condition="!Exists('..\packages\Eigen.3.3.3\build\native\Eigen.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Eigen.3.3.3\build\native\Eigen.targets'))" />
+    <Error Condition="!Exists('..\packages\boost.1.71.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.71.0.0\build\boost.targets'))" />
   </Target>
 </Project>
