@@ -37,6 +37,9 @@
     <Filter Include="Source Files\network">
       <UniqueIdentifier>{e8489267-1e08-4bd9-b609-7f82f53e3fb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\process">
+      <UniqueIdentifier>{5fdfd54b-b6eb-4a91-8f4c-83dec08e19fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="demo.cpp">
@@ -87,6 +90,9 @@
     <ClCompile Include="modules\tracker\double_tracker.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
+    <ClCompile Include="modules\process\offline_processor.cpp">
+      <Filter>Source Files\process</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -119,6 +125,9 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\double_tracker.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\offline_processor.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

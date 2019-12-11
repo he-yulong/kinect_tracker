@@ -19,6 +19,8 @@ using szl_kinect::SingleTrackerRecorder;
 using szl_kinect::SingleBodyTracker;
 #include "szl/double_tracker.h"
 using szl_kinect::DoubleTracker;
+#include "szl/offline_processor.h"
+using szl_kinect::OfflineProcessor;
 
 int main()
 {
@@ -37,6 +39,7 @@ int main()
 		cout << "6: to send tracking data using udp(baoliqiang)." << endl;
 		cout << "7: to test double kinects's tracker(simple information)." << endl;
 		cout << "8: to test double kinects's tracker(detailed information)." << endl;
+		cout << "9: to execute offline processing: mkv file to json file of tracking result." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -114,6 +117,10 @@ int main()
 			cout << endl;
 			DoubleTracker kinects;
 			kinects.RunWithDetailedInformation(max_frame);
+		}
+		else if (oper == "9") {
+			OfflineProcessor processor;
+			processor.Run();
 		}
 		else {
 			cout << "******************************************" << endl;
