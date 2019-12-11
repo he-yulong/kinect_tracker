@@ -22,7 +22,7 @@ using szl_kinect::DoubleTracker;
 
 int main()
 {
-	char oper;
+	string oper;
 	while (true)
 	{
 		cout << "-----------------------------------------" << endl;
@@ -40,43 +40,43 @@ int main()
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
-		if (oper == 'q') {
+		if (oper == "q") {
 			cout << "ready to quit..." << endl;
 			break;
 		}
-		else if (oper == '0') {
+		else if (oper == "0") {
 			SingleStartup kinect;
 			kinect.Run();
 		}
-		else if (oper == '1') {
+		else if (oper == "1") {
 			SingleView kinect;
 			kinect.Show();
 		}
-		else if (oper == '2') {
+		else if (oper == "2") {
 			DoubleView kinects;
 			kinects.Show();
 		}
-		else if (oper == '3') {
+		else if (oper == "3") {
 			SingleTracker kinect;
 			kinect.RunWithSimpleInformation();
 		}
-		else if (oper == '4') {
+		else if (oper == "4") {
 			SingleTracker kinect;
 			kinect.RunWithDetailedInformation();
 		}
-		else if (oper == '5') {
+		else if (oper == "5") {
 			SingleTrackerRecorder kinect;
 			kinect.Save();
 		}
-		else if (oper == '6') {
+		else if (oper == "6") {
 			SingleBodyTracker kinect;
 			kinect.Run("127.0.0.1", 8999, true);
 		}
-		else if (oper == '7') {
+		else if (oper == "7") {
 			DoubleTracker kinects;
 			kinects.RunWithSimpleInformation();
 		}
-		else if (oper == '8') {
+		else if (oper == "8") {
 			DoubleTracker kinects;
 			kinects.RunWithDetailedInformation();
 		}
