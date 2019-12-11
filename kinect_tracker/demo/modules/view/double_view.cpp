@@ -111,8 +111,10 @@ int DoubleView::Show()
 				cv::imshow("kinect ir frame sub", irFrame);
 			}
 		}
-		if (cv::waitKey(30) == 27 || cv::waitKey(30) == 'q')
+		if (cv::waitKey(1) == 27 || cv::waitKey(1) == 'q')
 		{
+			cv::destroyAllWindows();
+			dev_sub.close();
 			dev_master.close();
 			break;
 		}

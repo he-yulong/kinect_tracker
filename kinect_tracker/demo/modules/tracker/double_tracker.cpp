@@ -3,6 +3,8 @@ using szl_kinect::DoubleTracker;
 
 #include <iostream>
 using namespace std;
+using std::printf;
+
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -20,9 +22,8 @@ using namespace std;
 	printf("%s \n", msg);																				 \
 
 
-int DoubleTracker::RunWithSimpleInformation()
+int DoubleTracker::RunWithSimpleInformation(int max_frame)
 {
-
 	// set configuration
 	k4a_device_configuration_t config = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
 	config.camera_fps = K4A_FRAMES_PER_SECOND_30;
@@ -167,7 +168,7 @@ int DoubleTracker::RunWithSimpleInformation()
 			printf("Get depth capture returned error, get_capture_result_master: %d\n", get_capture_result_master);
 			break;
 		}
-	} while (frame_count < 100);
+	} while (frame_count < max_frame || max_frame == -1);
 
 	printf("Finished body tracking processing!\n");
 
@@ -221,7 +222,7 @@ void print_double_body_index_map_middle_line(k4a_image_t body_index_map)
 	printf("\n");
 }
 
-int DoubleTracker::RunWithDetailedInformation()
+int DoubleTracker::RunWithDetailedInformation(int max_frame)
 {
 
 	// set configuration
@@ -408,7 +409,7 @@ int DoubleTracker::RunWithDetailedInformation()
 			break;
 		}
 
-	} while (frame_count < 100);
+	} while (frame_count < max_frame || max_frame == -1);
 
 	printf("Finished body tracking processing!\n");
 

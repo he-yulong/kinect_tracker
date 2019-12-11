@@ -57,28 +57,63 @@ int main()
 			kinects.Show();
 		}
 		else if (oper == "3") {
+			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
+			int max_frame;
+			cin >> max_frame;
+			cout << endl;
 			SingleTracker kinect;
-			kinect.RunWithSimpleInformation();
+			kinect.RunWithSimpleInformation(max_frame);
 		}
 		else if (oper == "4") {
+			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
+			int max_frame;
+			cin >> max_frame;
+			cout << endl;
 			SingleTracker kinect;
-			kinect.RunWithDetailedInformation();
+			kinect.RunWithDetailedInformation(max_frame);
 		}
 		else if (oper == "5") {
 			SingleTrackerRecorder kinect;
 			kinect.Save();
 		}
 		else if (oper == "6") {
+			string arg;
+
+			string ip_addr;
+			cout << "Please set the udp server's IP address(e.g. 127.0.0.1, 172.27.15.101) or type in 'd' to use default '127.0.0.1': ";
+			cin >> arg;
+			if (arg == "d") {
+				ip_addr = "127.0.0.1";
+				cout << "You set the udp server's IP address: " << ip_addr << endl;
+			}
+			
+			int port;
+			cout << "Please set the udp server's port(e.g. 8999, 6666) or type in 'd' to use default '8999': ";
+			cin >> arg;
+			if (arg == "d") {
+				port = 8999;
+				cout << "You set the udp server's port: " << port << endl;
+			}
+			cout << endl;
+
 			SingleBodyTracker kinect;
-			kinect.Run("127.0.0.1", 8999, true);
+			kinect.Run(ip_addr, port, true);
 		}
 		else if (oper == "7") {
+			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
+			int max_frame;
+			cin >> max_frame;
+			cout << endl;
 			DoubleTracker kinects;
-			kinects.RunWithSimpleInformation();
+			kinects.RunWithSimpleInformation(max_frame);
 		}
 		else if (oper == "8") {
+			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
+			int max_frame;
+			cin >> max_frame;
+			cout << endl;
 			DoubleTracker kinects;
-			kinects.RunWithDetailedInformation();
+			kinects.RunWithDetailedInformation(max_frame);
 		}
 		else {
 			cout << "******************************************" << endl;

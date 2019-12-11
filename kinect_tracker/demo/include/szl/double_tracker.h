@@ -3,8 +3,8 @@ namespace szl_kinect {
 	class DoubleTracker
 	{
 	public:
-		int RunWithSimpleInformation();
-		int RunWithDetailedInformation();
+		int RunWithSimpleInformation(int);
+		int RunWithDetailedInformation(int);
 	};
 
 }

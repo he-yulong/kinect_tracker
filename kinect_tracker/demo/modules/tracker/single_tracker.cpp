@@ -20,7 +20,7 @@ using namespace std;
 	printf("%s \n", msg);																				 \
 
 
-int SingleTracker::RunWithSimpleInformation()
+int SingleTracker::RunWithSimpleInformation(int max_frame)
 {
 	k4a_device_t device = NULL;
 	VERIFY(k4a_device_open(0, &device), "Open K4A Device succeed.", "Open K4A Device failed!");
@@ -100,7 +100,7 @@ int SingleTracker::RunWithSimpleInformation()
 			break;
 		}
 
-	} while (frame_count < 100);
+	} while (frame_count < max_frame || max_frame == -1);
 
 	printf("Finished body tracking processing!\n");
 
@@ -149,7 +149,7 @@ void print_body_index_map_middle_line(k4a_image_t body_index_map)
 	printf("\n");
 }
 
-int SingleTracker::RunWithDetailedInformation()
+int SingleTracker::RunWithDetailedInformation(int max_frame)
 {
 	k4a_device_configuration_t device_config = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
 	device_config.depth_mode = K4A_DEPTH_MODE_NFOV_UNBINNED;
@@ -246,7 +246,7 @@ int SingleTracker::RunWithDetailedInformation()
 			break;
 		}
 
-	} while (frame_count < 100);
+	} while (frame_count < max_frame || max_frame == -1);
 
 	printf("Finished body tracking processing!\n");
 
