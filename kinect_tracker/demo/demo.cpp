@@ -17,6 +17,8 @@ using szl_kinect::SingleTracker;
 using szl_kinect::SingleTrackerRecorder;
 #include "szl/single_body_tracker.h"
 using szl_kinect::SingleBodyTracker;
+#include "szl/double_tracker.h"
+using szl_kinect::DoubleTracker;
 
 int main()
 {
@@ -33,6 +35,8 @@ int main()
 		cout << "4: to test single kinect's tracker(detailed information)." << endl;
 		cout << "5: to save images and tracking data in the save directory(baoliqiang)." << endl;
 		cout << "6: to send tracking data using udp(baoliqiang)." << endl;
+		cout << "7: to test double kinects's tracker(simple information)." << endl;
+		cout << "8: to test double kinects's tracker(detailed information)." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -49,8 +53,8 @@ int main()
 			kinect.Show();
 		}
 		else if (oper == '2') {
-			DoubleView kinect;
-			kinect.Show();
+			DoubleView kinects;
+			kinects.Show();
 		}
 		else if (oper == '3') {
 			SingleTracker kinect;
@@ -67,6 +71,14 @@ int main()
 		else if (oper == '6') {
 			SingleBodyTracker kinect;
 			kinect.Run("127.0.0.1", 8999, true);
+		}
+		else if (oper == '7') {
+			DoubleTracker kinects;
+			kinects.RunWithSimpleInformation();
+		}
+		else if (oper == '8') {
+			DoubleTracker kinects;
+			kinects.RunWithDetailedInformation();
 		}
 		else {
 			cout << "******************************************" << endl;

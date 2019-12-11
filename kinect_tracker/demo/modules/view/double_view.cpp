@@ -38,7 +38,6 @@ using namespace std;
 
 int DoubleView::Show()
 {
-	std::cout << "Hello World!\n";
 	const uint32_t deviceCount = k4a::device::get_installed_count();
 	if (deviceCount == 0)
 	{

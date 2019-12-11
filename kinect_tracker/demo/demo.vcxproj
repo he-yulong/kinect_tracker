@@ -180,6 +180,7 @@
     <ClCompile Include="modules\third_party\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="modules\third_party\k4a_opengl\texture.cpp" />
     <ClCompile Include="modules\third_party\k4a_opengl\viewerwindow.cpp" />
+    <ClCompile Include="modules\tracker\double_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_body_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_skeleton_processor.cpp" />
     <ClCompile Include="modules\tracker\single_tracker.cpp" />
@@ -192,6 +193,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\szl\double_tracker.h" />
     <ClInclude Include="include\szl\double_view.h" />
     <ClInclude Include="include\szl\single_body_tracker.h" />
     <ClInclude Include="include\szl\single_skeleton_processor.h" />

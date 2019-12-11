@@ -84,6 +84,9 @@
     <ClCompile Include="modules\tracker\single_body_tracker.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
+    <ClCompile Include="modules\tracker\double_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -113,6 +116,9 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\single_body_tracker.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\double_tracker.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>
