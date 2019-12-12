@@ -3,7 +3,7 @@
 using std::string;
 
 namespace szl_kinect {
-	class SingleBodyTracker
+	class DoubleUDPTracker
 	{
 	public:
 		int Run(string udp_ip, int udp_port, bool all_joints);

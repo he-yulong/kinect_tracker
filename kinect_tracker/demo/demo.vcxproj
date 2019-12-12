@@ -182,7 +182,7 @@
     <ClCompile Include="modules\third_party\k4a_opengl\texture.cpp" />
     <ClCompile Include="modules\third_party\k4a_opengl\viewerwindow.cpp" />
     <ClCompile Include="modules\tracker\double_tracker.cpp" />
-    <ClCompile Include="modules\tracker\single_body_tracker.cpp" />
+    <ClCompile Include="modules\tracker\single_udp_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_skeleton_processor.cpp" />
     <ClCompile Include="modules\tracker\single_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_tracker_recorder.cpp" />
@@ -195,13 +195,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\szl\double_tracker.h" />
+    <ClInclude Include="include\szl\double_udp_tracker.h" />
     <ClInclude Include="include\szl\double_view.h" />
     <ClInclude Include="include\szl\offline_processor.h" />
-    <ClInclude Include="include\szl\single_body_tracker.h" />
     <ClInclude Include="include\szl\single_skeleton_processor.h" />
     <ClInclude Include="include\szl\single_startup.h" />
     <ClInclude Include="include\szl\single_tracker.h" />
     <ClInclude Include="include\szl\single_tracker_recorder.h" />
+    <ClInclude Include="include\szl\single_udp_tracker.h" />
     <ClInclude Include="include\szl\single_view.h" />
     <ClInclude Include="include\szl\udp_sender.h" />
   </ItemGroup>

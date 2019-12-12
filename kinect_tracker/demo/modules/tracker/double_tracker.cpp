@@ -115,7 +115,7 @@ int DoubleTracker::RunWithSimpleInformation(int max_frame)
 
 				size_t num_bodies = k4abt_frame_get_num_bodies(body_frame_sub);
 				printf("%zu bodies are detected!(Subordinate)\n", num_bodies);
-
+				cout << "Device timestamp: " << k4abt_frame_get_device_timestamp_usec(body_frame_sub) << endl;
 				k4abt_frame_release(body_frame_sub); // Remember to release the body frame once you finish using it
 			}
 			else if (pop_frame_result_sub == K4A_WAIT_RESULT_TIMEOUT)
@@ -138,6 +138,7 @@ int DoubleTracker::RunWithSimpleInformation(int max_frame)
 
 				size_t num_bodies = k4abt_frame_get_num_bodies(body_frame_master);
 				printf("%zu bodies are detected!(Master)\n", num_bodies);
+				cout << "Device timestamp: " << k4abt_frame_get_device_timestamp_usec(body_frame_master) << endl;
 
 				k4abt_frame_release(body_frame_master); // Remember to release the body frame once you finish using it
 			}
@@ -323,13 +324,14 @@ int DoubleTracker::RunWithDetailedInformation(int max_frame)
 					VERIFY(k4abt_frame_get_body_skeleton(body_frame_sub, i, &body.skeleton), "Get body from body frame succeed.", "Get body from body frame failed!");
 					body.id = k4abt_frame_get_body_id(body_frame_sub, i);
 
+					cout << "Device timestamp: " << k4abt_frame_get_device_timestamp_usec(body_frame_sub) << endl;
 					print_double_body_information(body);
 				}
 
 				k4a_image_t body_index_map = k4abt_frame_get_body_index_map(body_frame_sub);
 				if (body_index_map != NULL)
 				{
-					print_double_body_index_map_middle_line(body_index_map);
+					//print_double_body_index_map_middle_line(body_index_map);
 					k4a_image_release(body_index_map);
 				}
 				else
@@ -357,7 +359,7 @@ int DoubleTracker::RunWithDetailedInformation(int max_frame)
 			{
 				// Successfully popped the body tracking result. Start your processing
 				size_t num_bodies = k4abt_frame_get_num_bodies(body_frame_master);
-				printf("%zu bodies are detected!(Subordinate)\n", num_bodies);
+				printf("%zu bodies are detected!(Master)\n", num_bodies);
 
 				for (size_t i = 0; i < num_bodies; i++)
 				{
@@ -365,13 +367,14 @@ int DoubleTracker::RunWithDetailedInformation(int max_frame)
 					VERIFY(k4abt_frame_get_body_skeleton(body_frame_master, i, &body.skeleton), "Get body from body frame succeed.", "Get body from body frame failed!");
 					body.id = k4abt_frame_get_body_id(body_frame_master, i);
 
+					cout << "Device timestamp: " << k4abt_frame_get_device_timestamp_usec(body_frame_master) << endl;
 					print_double_body_information(body);
 				}
 
 				k4a_image_t body_index_map = k4abt_frame_get_body_index_map(body_frame_master);
 				if (body_index_map != NULL)
 				{
-					print_double_body_index_map_middle_line(body_index_map);
+					//print_double_body_index_map_middle_line(body_index_map);
 					k4a_image_release(body_index_map);
 				}
 				else

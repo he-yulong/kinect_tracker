@@ -1,5 +1,5 @@
-﻿#include "szl/single_body_tracker.h"
-using szl_kinect::SingleBodyTracker;
+﻿#include "szl/single_udp_tracker.h"
+using szl_kinect::SingleUDPTracker;
 
 #include <iostream>
 using std::string;
@@ -21,7 +21,7 @@ using std::string;
 //DEFINE_int32(udp_port, 8999, "Port for udp transmission");
 //DEFINE_bool(all_joints, true, "If output all joints");
 
-int SingleBodyTracker::Run(string udp_ip, int udp_port, bool all_joints)
+int SingleUDPTracker::Run(string udp_ip, int udp_port, bool all_joints)
 {
 	//// Parse args
 	//gflags::ParseCommandLineFlags(&argc, &argv, true);

@@ -84,14 +84,14 @@
     <ClCompile Include="modules\tracker\single_skeleton_processor.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
-    <ClCompile Include="modules\tracker\single_body_tracker.cpp">
-      <Filter>Source Files\tracker</Filter>
-    </ClCompile>
     <ClCompile Include="modules\tracker\double_tracker.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
     <ClCompile Include="modules\process\offline_processor.cpp">
       <Filter>Source Files\process</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\tracker\single_udp_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,13 +121,16 @@
     <ClInclude Include="include\szl\single_skeleton_processor.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
-    <ClInclude Include="include\szl\single_body_tracker.h">
-      <Filter>Header Files\szl</Filter>
-    </ClInclude>
     <ClInclude Include="include\szl\double_tracker.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\offline_processor.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\single_udp_tracker.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\double_udp_tracker.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

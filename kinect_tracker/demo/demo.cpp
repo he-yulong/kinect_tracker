@@ -15,8 +15,8 @@ using szl_kinect::DoubleView;
 using szl_kinect::SingleTracker;
 #include "szl/single_tracker_recorder.h"
 using szl_kinect::SingleTrackerRecorder;
-#include "szl/single_body_tracker.h"
-using szl_kinect::SingleBodyTracker;
+#include "szl/single_udp_tracker.h"
+using szl_kinect::SingleUDPTracker;
 #include "szl/double_tracker.h"
 using szl_kinect::DoubleTracker;
 #include "szl/offline_processor.h"
@@ -99,7 +99,7 @@ int main()
 			}
 			cout << endl;
 
-			SingleBodyTracker kinect;
+			SingleUDPTracker kinect;
 			kinect.Run(ip_addr, port, true);
 		}
 		else if (oper == "7") {
