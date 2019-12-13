@@ -14,6 +14,7 @@ UDPSender::UDPSender(const string& ip, const int& port)
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 	sendSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
+	cout << ip << ":" << port << " is ready." << endl;
 	// Config server
 	//recvAddr.sin_port = htons(port);
 	//InetPton(AF_INET, (PCWSTR)ip.c_str(), &recvAddr.sin_addr.s_addr);

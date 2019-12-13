@@ -93,6 +93,9 @@
     <ClCompile Include="modules\tracker\single_udp_tracker.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
+    <ClCompile Include="modules\tracker\double_udp_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

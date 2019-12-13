@@ -21,6 +21,8 @@ using szl_kinect::SingleUDPTracker;
 using szl_kinect::DoubleTracker;
 #include "szl/offline_processor.h"
 using szl_kinect::OfflineProcessor;
+#include "szl/double_udp_tracker.h"
+using szl_kinect::DoubleUDPTracker;
 
 int main()
 {
@@ -36,10 +38,11 @@ int main()
 		cout << "3: to test single kinect's tracker(simple information)." << endl;
 		cout << "4: to test single kinect's tracker(detailed information)." << endl;
 		cout << "5: to save images and tracking data in the save directory(baoliqiang)." << endl;
-		cout << "6: to send tracking data using udp(baoliqiang)." << endl;
+		cout << "6: to send single tracking data using UDP(baoliqiang)." << endl;
 		cout << "7: to test double kinects's tracker(simple information)." << endl;
 		cout << "8: to test double kinects's tracker(detailed information)." << endl;
 		cout << "9: to execute offline processing: mkv file to json file of tracking result." << endl;
+		cout << "10: to send two kinects' tracking data using UDP." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -90,11 +93,11 @@ int main()
 				cout << "You set the udp server's IP address: " << ip_addr << endl;
 			}
 			
-			int port;
+			int port = 8999;
 			cout << "Please set the udp server's port(e.g. 8999, 6666) or type in 'd' to use default '8999': ";
 			cin >> arg;
-			if (arg == "d") {
-				port = 8999;
+			if (arg != "d") {
+				port = atoi(arg.c_str());
 				cout << "You set the udp server's port: " << port << endl;
 			}
 			cout << endl;
@@ -121,6 +124,52 @@ int main()
 		else if (oper == "9") {
 			OfflineProcessor processor;
 			processor.Run();
+		}
+		else if (oper == "10") {
+			string arg;
+
+			// sub
+			string ip_addr_sub = "127.0.0.1";
+			cout << "Kinect Sub: Please set the udp server's IP address(e.g. 127.0.0.1, 172.27.15.101) or type in 'd' to use default '127.0.0.1': ";
+			cin >> arg;
+			if (arg != "d") {
+				ip_addr_sub = arg;
+			}
+			cout << "Kinect Sub: You set the udp server's IP address: " << ip_addr_sub << endl;
+
+			int port_sub = 8999;
+			cout << "Kinect Sub: Please set the udp server's port(e.g. 8999, 6666) or type in 'd' to use default '8999': ";
+			cin >> arg;
+			if (arg != "d") {
+				port_sub = atoi(arg.c_str());
+			}
+			cout << "Kinect Sub: You set the udp server's port: " << port_sub << endl;
+
+			// master
+			string ip_addr_master = "127.0.0.1";
+			cout << "Kinect Master: Please set the udp server's IP address(e.g. 127.0.0.1, 172.27.15.101) or type in 'd' to use default '127.0.0.1': ";
+			cin >> arg;
+			if (arg != "d") {
+				ip_addr_master = arg;
+			}
+			cout << "Kinect Master: You set the udp server's IP address: " << ip_addr_master << endl;
+
+			int port_master = 8998;
+			cout << "Kinect Master: Please set the udp server's port(e.g. 8999, 6666) or type in 'd' to use default '8998': ";
+			cin >> arg;
+			if (arg != "d") {
+				port_master = atoi(arg.c_str());
+			}
+			cout << "Kinect Master: You set the udp server's port: " << port_master << endl;
+			cout << endl;
+
+			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
+			int max_frame;
+			cin >> max_frame;
+			cout << endl;
+
+			DoubleUDPTracker kinects;
+			kinects.Run(ip_addr_sub, ip_addr_master, port_sub, port_master, true, max_frame);
 		}
 		else {
 			cout << "******************************************" << endl;

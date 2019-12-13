@@ -182,6 +182,7 @@
     <ClCompile Include="modules\third_party\k4a_opengl\texture.cpp" />
     <ClCompile Include="modules\third_party\k4a_opengl\viewerwindow.cpp" />
     <ClCompile Include="modules\tracker\double_tracker.cpp" />
+    <ClCompile Include="modules\tracker\double_udp_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_udp_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_skeleton_processor.cpp" />
     <ClCompile Include="modules\tracker\single_tracker.cpp" />
