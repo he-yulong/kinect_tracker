@@ -1,0 +1,10 @@
+#pragma once
+int listing4_1();
+int listing4_2();
+int listing4_3();
+int listing4_4();
+int listing4_5();
+int listing4_7();
+int listing4_8();
+int listing4_9();
+int listing4_10();

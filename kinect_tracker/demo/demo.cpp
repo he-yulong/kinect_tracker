@@ -23,6 +23,10 @@ using szl_kinect::DoubleTracker;
 using szl_kinect::OfflineProcessor;
 #include "szl/double_udp_tracker.h"
 using szl_kinect::DoubleUDPTracker;
+#include "szl/double_extrinsics.h"
+using szl_kinect::DoubleExtrinsics;
+#include "szl/aruco_marker.h"
+using szl_kinect::ArucoMarker;
 
 int main()
 {
@@ -43,6 +47,8 @@ int main()
 		cout << "8: to test double kinects's tracker(detailed information)." << endl;
 		cout << "9: to execute offline processing: mkv file to json file of tracking result." << endl;
 		cout << "10: to send two kinects' tracking data using UDP." << endl;
+		cout << "11: to test aruco marker demo." << endl;
+		cout << "12: to get two kinects' extrinsics data." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -92,7 +98,7 @@ int main()
 				ip_addr = "127.0.0.1";
 				cout << "You set the udp server's IP address: " << ip_addr << endl;
 			}
-			
+
 			int port = 8999;
 			cout << "Please set the udp server's port(e.g. 8999, 6666) or type in 'd' to use default '8999': ";
 			cin >> arg;
@@ -170,6 +176,17 @@ int main()
 
 			DoubleUDPTracker kinects;
 			kinects.Run(ip_addr_sub, ip_addr_master, port_sub, port_master, true, max_frame);
+		}
+		else if (oper == "11") {
+			ArucoMarker marker;
+			//marker.Create();
+			//marker.Calibrate();
+			//marker.PoseEstimate();
+			marker.DrawCube();
+		}
+		else if (oper == "12") {
+			DoubleExtrinsics ex;
+		ex.Get();
 		}
 		else {
 			cout << "******************************************" << endl;
