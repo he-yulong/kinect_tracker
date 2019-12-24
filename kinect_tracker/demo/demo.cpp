@@ -23,10 +23,17 @@ using szl_kinect::DoubleTracker;
 using szl_kinect::OfflineProcessor;
 #include "szl/double_udp_tracker.h"
 using szl_kinect::DoubleUDPTracker;
-#include "szl/double_extrinsics.h"
-using szl_kinect::DoubleExtrinsics;
 #include "szl/aruco_marker.h"
 using szl_kinect::ArucoMarker;
+#include "szl/calib_intrinsic.h"
+using szl_kinect::CalibIntrinsic;
+#include "szl/calib_stereo.h"
+using szl_kinect::CalibStereo;
+#include "szl/double_extrinsics.h"
+using szl_kinect::DoubleExtrinsics;
+#include "szl/image_writer.h"
+using szl_kinect::ImageWriter;
+
 
 int main()
 {
@@ -48,7 +55,9 @@ int main()
 		cout << "9: to execute offline processing: mkv file to json file of tracking result." << endl;
 		cout << "10: to send two kinects' tracking data using UDP." << endl;
 		cout << "11: to test aruco marker demo." << endl;
-		cout << "12: to get two kinects' extrinsics data." << endl;
+		cout << "12: to test chessboard calibration demo." << endl;
+		cout << "13: to get two kinects' extrinsics data." << endl;
+		cout << "14: to write images(use chessborad calibration)." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -185,8 +194,17 @@ int main()
 			marker.DrawCube();
 		}
 		else if (oper == "12") {
+			//CalibIntrinsic calib;
+			CalibStereo calib;
+			calib.Get();
+		}
+		else if (oper == "13") {
 			DoubleExtrinsics ex;
-		ex.Get();
+			ex.Get();
+		}
+		else if (oper == "14") {
+			ImageWriter writer;
+			writer.Write();
 		}
 		else {
 			cout << "******************************************" << endl;
@@ -195,14 +213,3 @@ int main()
 		}
 	}
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

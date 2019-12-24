@@ -93,7 +93,6 @@ int DoubleView::Show()
 				cv::imshow("kinect color frame master", colorFrame);
 				cv::imshow("kinect ir frame master", irFrame);
 			}
-
 			{
 				depthImage = capture_sub.get_depth_image();
 				colorImage = capture_sub.get_color_image();
