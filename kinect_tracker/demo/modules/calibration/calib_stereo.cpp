@@ -87,13 +87,13 @@ int szl_kinect::CalibStereo::Get()
 {
 	string leftcalib_file = "cam_left.yml";
 	string rightcalib_file = "cam_right.yml";
-	string leftimg_dir = "calib_imgs/4/";
-	string rightimg_dir = "calib_imgs/4/";
+	string leftimg_dir = "calib_imgs/6/";
+	string rightimg_dir = "calib_imgs/6/";
 	string leftimg_filename = "left";
 	string rightimg_filename = "right";
 	string extension = "jpg";
 	string out_file = "cam_stereo.yml";
-	int num_imgs = 100;
+	int num_imgs = 49;
 
 	FileStorage fsl(leftcalib_file, FileStorage::READ);
 	FileStorage fsr(rightcalib_file, FileStorage::READ);

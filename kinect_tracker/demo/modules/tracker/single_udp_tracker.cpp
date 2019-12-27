@@ -7,7 +7,8 @@ using std::string;
 #include <k4a/k4a.h>
 #include <k4abt.h>
 #include "szl/udp_sender.h"
-#include "szl/single_skeleton_processor.h"
+//#include "szl/single_skeleton_processor.h"
+#include "szl/quaternion_skeleton_processor.h"
 
 #define VERIFY(result, error)																				\
 	if (result != K4A_RESULT_SUCCEEDED)																		\
@@ -31,7 +32,7 @@ int SingleUDPTracker::Run(string udp_ip, int udp_port, bool all_joints)
 	UDPSender udpSender(udp_ip, udp_port);
 
 	k4a_device_t device = NULL;
-	k4a_device_open(0, &device);
+	k4a_device_open(1, &device);
 
 	// Strart Camera. Make sure depth camera is enabled.
 	k4a_device_configuration_t deviceConfig = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
@@ -84,16 +85,22 @@ int SingleUDPTracker::Run(string udp_ip, int udp_port, bool all_joints)
 					if (skeleton_result == K4A_RESULT_SUCCEEDED)
 					{
 						// Successfully get skeleton for the i-th person. Start processingS
-						SkeletonProcessor processor(skeleton);
+						//SkeletonProcessor processor(skeleton);
+						QuaternionSkeletonProcessor processor(skeleton);
 
 						// Output joints
 						string skeleton_result = "";
 						//if (FLAGS_all_joints) {
 						if (all_joints) {
-							skeleton_result = processor.FixView().ToString();
+							cout << "????????" << processor.ToString(processor.mSkeleton) << "???????????" << endl;
+
+							skeleton_result = processor.FixView().ToString(processor.mSkeleton);
+
+							cout << "????????" << skeleton_result << "???????????" << endl;
+							cout << "???????????????????" << endl;
 						}
 						else {
-							skeleton_result = processor.ToUnity().FixView().ToString();
+							skeleton_result = processor.ToUnity().FixView().ToString(processor.mSkeleton);
 						}
 
 						// Send results with udp

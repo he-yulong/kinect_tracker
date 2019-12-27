@@ -114,6 +114,9 @@
     <ClCompile Include="modules\calibration\image_writer.cpp">
       <Filter>Source Files\calibration</Filter>
     </ClCompile>
+    <ClCompile Include="modules\process\quaternion_skeleton_processor.cpp">
+      <Filter>Source Files\process</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -171,6 +174,9 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\image_writer.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\quaternion_skeleton_processor.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

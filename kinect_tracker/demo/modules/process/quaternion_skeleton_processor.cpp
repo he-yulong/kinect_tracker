@@ -1,5 +1,5 @@
-#include "szl/single_skeleton_processor.h"
-using szl_kinect::SkeletonProcessor;
+#include "szl/quaternion_skeleton_processor.h"
+using szl_kinect::QuaternionSkeletonProcessor;
 
 #include <iostream>
 #include <sstream>
@@ -7,7 +7,7 @@ using szl_kinect::SkeletonProcessor;
 #include <boost/algorithm/string.hpp>
 
 
-const map<string, int> SkeletonProcessor::kinectJointMap = {
+const map<string, int> QuaternionSkeletonProcessor::kinectJointMap = {
 	{"PELVIS", 0},
 	{"SPINE_NAVAL", 1},
 	{"SPINE_CHEST", 2},
@@ -42,7 +42,7 @@ const map<string, int> SkeletonProcessor::kinectJointMap = {
 	{"EAR_RIGHT", 31}
 };
 
-const vector<string> SkeletonProcessor::unityJoints = {
+const vector<string> QuaternionSkeletonProcessor::unityJoints = {
 	"PELVIS",
 	"HIP_RIGHT",
 	"KNEE_RIGHT",
@@ -62,27 +62,30 @@ const vector<string> SkeletonProcessor::unityJoints = {
 	"WRIST_RIGHT"
 };
 
-SkeletonProcessor::SkeletonProcessor() :
+QuaternionSkeletonProcessor::QuaternionSkeletonProcessor() :
 	mHasShift(false) {
-
 	// Initialize rotation matrix
 	mRotationMatrix << 1, 0, 0, 0, -0.1736, 0.9848, 0, -0.9848, -0.1736;
+	//mRotationMatrix << 1, 0, 0, 0, 1, 0, 0, -0, 1;
 }
 
-SkeletonProcessor::SkeletonProcessor(k4abt_skeleton_t skeleton) :mHasShift(false) {
+QuaternionSkeletonProcessor::QuaternionSkeletonProcessor(k4abt_skeleton_t skeleton) :
+	mHasShift(false) {
 	for (int i = 0; i < K4ABT_JOINT_COUNT; i++) {
 		mSkeleton.push_back(skeleton.joints[i]);
 	}
 
 	// Initialize rotation matrix
 	mRotationMatrix << 1, 0, 0, 0, -0.1736, 0.9848, 0, -0.9848, -0.1736;
+	//mRotationMatrix << 1, 0, 0, 0, 1, 0, 0, -0, 1;
+	//mRotationMatrix << 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693;
 }
 
-SkeletonProcessor::~SkeletonProcessor() {
+QuaternionSkeletonProcessor::~QuaternionSkeletonProcessor() {
 
 }
 
-vector<string> SkeletonProcessor::Split(const string& input, const string& delim) {
+vector<string> QuaternionSkeletonProcessor::Split(const string& input, const string& delim) {
 	regex re{ delim };
 	return vector<string> {
 		sregex_token_iterator(input.begin(), input.end(), re, -1),
@@ -90,7 +93,7 @@ vector<string> SkeletonProcessor::Split(const string& input, const string& delim
 	};
 }
 
-SkeletonProcessor& SkeletonProcessor::ToUnity() {
+QuaternionSkeletonProcessor& QuaternionSkeletonProcessor::ToUnity() {
 	vector<k4abt_joint_t> unitySkeleton;
 	for (int i = 0; i < unityJoints.size(); i++) {
 		int kinectIndex = kinectJointMap.at(unityJoints[i]);
@@ -101,7 +104,7 @@ SkeletonProcessor& SkeletonProcessor::ToUnity() {
 	return *this;
 }
 
-SkeletonProcessor& SkeletonProcessor::FixView() {
+QuaternionSkeletonProcessor& QuaternionSkeletonProcessor::FixView() {
 	// Get skeleton matrix
 	Matrix3Xf skeletonMatrix;
 	skeletonMatrix.resize(3, mSkeleton.size());
@@ -110,7 +113,6 @@ SkeletonProcessor& SkeletonProcessor::FixView() {
 		skeletonMatrix(1, i) = mSkeleton.at(i).position.xyz.y;
 		skeletonMatrix(2, i) = mSkeleton.at(i).position.xyz.z;
 	}
-
 	// Rotation
 	skeletonMatrix = mRotationMatrix * skeletonMatrix;
 
@@ -150,16 +152,16 @@ SkeletonProcessor& SkeletonProcessor::FixView() {
 	return *this;
 }
 
-SkeletonProcessor& SkeletonProcessor::FromString(string skeleton_string) {
+QuaternionSkeletonProcessor& QuaternionSkeletonProcessor::FromString(string skeleton_string) {
 	boost::trim(skeleton_string);
-	auto split_vector = SkeletonProcessor::Split(skeleton_string, ",");
+	auto split_vector = QuaternionSkeletonProcessor::Split(skeleton_string, ",");
 
 	// Clear skeleton vector
 	mSkeleton.clear();
 
 	for (int i = 0; i < split_vector.size(); i++) {
 		boost::trim(split_vector[i]);
-		auto split_float = SkeletonProcessor::Split(split_vector[i], " ");
+		auto split_float = QuaternionSkeletonProcessor::Split(split_vector[i], " ");
 
 		// Make sure split_float has 3 items
 		assert(split_float.size() == 3);
@@ -174,7 +176,7 @@ SkeletonProcessor& SkeletonProcessor::FromString(string skeleton_string) {
 	return *this;
 }
 
-string SkeletonProcessor::ToString() {
+string QuaternionSkeletonProcessor::ToString() {
 	stringstream ss;
 	vector<k4abt_joint_t>::iterator iter;
 	for (iter = mSkeleton.begin(); iter != mSkeleton.end(); iter++) {
@@ -182,5 +184,50 @@ string SkeletonProcessor::ToString() {
 		ss << iter->position.xyz.y << " ";
 		ss << iter->position.xyz.z << ", ";
 	}
+	// Output rotation
+	ss << "| ";
+
+	int k = 0;
+	for (iter = mSkeleton.begin(); iter != mSkeleton.end(); iter++) {
+		Quaternionf result = Quaternionf(mRotationMatrix) * Quaternionf(iter->orientation.wxyz.w, iter->orientation.wxyz.x, iter->orientation.wxyz.y, iter->orientation.wxyz.z);
+		ss << result.coeffs()(3, 0) << " ";
+		ss << result.coeffs()(0, 0) << " ";
+		ss << result.coeffs()(1, 0) << " ";
+		ss << result.coeffs()(2, 0) << ", ";
+
+		//ss << iter->orientation.wxyz.w << " ";
+		//ss << iter->orientation.wxyz.x << " ";
+		//ss << iter->orientation.wxyz.y << " ";
+		//ss << iter->orientation.wxyz.z << ", ";
+	}
+
+	return ss.str();
+}
+
+string QuaternionSkeletonProcessor::ToString(vector<k4abt_joint_t> mSkeleton0) {
+	stringstream ss;
+	vector<k4abt_joint_t>::iterator iter;
+	for (iter = mSkeleton0.begin(); iter != mSkeleton0.end(); iter++) {
+		ss << iter->position.xyz.x << " ";
+		ss << iter->position.xyz.y << " ";
+		ss << iter->position.xyz.z << ", ";
+	}
+	// Output rotation
+	ss << "| ";
+
+	int k = 0;
+	for (iter = mSkeleton.begin(); iter != mSkeleton.end(); iter++) {
+		Quaternionf result = Quaternionf(mRotationMatrix) * Quaternionf(iter->orientation.wxyz.w, iter->orientation.wxyz.x, iter->orientation.wxyz.y, iter->orientation.wxyz.z);
+		ss << result.coeffs()(3, 0) << " ";
+		ss << result.coeffs()(0, 0) << " ";
+		ss << result.coeffs()(1, 0) << " ";
+		ss << result.coeffs()(2, 0) << ", ";
+		
+		//ss << iter->orientation.wxyz.w << " ";
+		//ss << iter->orientation.wxyz.x << " ";
+		//ss << iter->orientation.wxyz.y << " ";
+		//ss << iter->orientation.wxyz.z << ", ";
+	}
+
 	return ss.str();
 }

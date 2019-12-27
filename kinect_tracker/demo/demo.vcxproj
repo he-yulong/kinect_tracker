@@ -179,6 +179,7 @@
     <ClCompile Include="modules\calibration\image_writer.cpp" />
     <ClCompile Include="modules\network\udp_sender.cpp" />
     <ClCompile Include="modules\process\offline_processor.cpp" />
+    <ClCompile Include="modules\process\quaternion_skeleton_processor.cpp" />
     <ClCompile Include="modules\startup\single_startup.cpp" />
     <ClCompile Include="modules\third_party\forestsen\StaticImageProperties.cpp" />
     <ClCompile Include="modules\third_party\imgui\imgui.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="include\szl\double_view.h" />
     <ClInclude Include="include\szl\image_writer.h" />
     <ClInclude Include="include\szl\offline_processor.h" />
+    <ClInclude Include="include\szl\quaternion_skeleton_processor.h" />
     <ClInclude Include="include\szl\single_skeleton_processor.h" />
     <ClInclude Include="include\szl\single_startup.h" />
     <ClInclude Include="include\szl\single_tracker.h" />

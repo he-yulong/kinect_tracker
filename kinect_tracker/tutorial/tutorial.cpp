@@ -12,7 +12,10 @@ int main()
 	//listing4_7();
 	//listing4_8();
 	//listing4_9();
-	listing4_10();
+	//listing4_10();
+	//listing4_11();
+	//listing4_12();
+	listing4_13();
 
 	return 0;
 }

@@ -21,6 +21,8 @@ using szl_kinect::ImageWriter;
 #include "forestsen/Pixel.h"
 #include "forestsen/DepthPixelColorizer.h"
 
+#include <windows.h>
+
 using namespace std;
 
 #define VERIFY(result, error)																				\
@@ -77,7 +79,7 @@ bool save_iw = true;
 
 int ImageWriter::Write()
 {
-	string save_dir = "calib_imgs/4";
+	string save_dir = "calib_imgs/6";
 
 	if (save_iw) {
 		MakeDirsIW(save_dir.c_str());
@@ -124,6 +126,7 @@ int ImageWriter::Write()
 	do
 	{
 		if (dev_master.get_capture(&capture_master, std::chrono::milliseconds(0)) && dev_sub.get_capture(&capture_sub, std::chrono::milliseconds(0))) {
+			Sleep(4000);
 			cout << frame_count << ":----------------------------------------------------------------------------------------------" << endl;
 			frame_count++;
 			{
@@ -154,7 +157,7 @@ int ImageWriter::Write()
 				}
 			}
 		}
-	} while (frame_count < 100);
+	} while (frame_count < 50);
 
 	dev_sub.close();
 	dev_master.close();

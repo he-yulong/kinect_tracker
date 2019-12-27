@@ -199,3 +199,84 @@ int listing4_10()
 
 	return 0;
 }
+
+int listing4_11()
+{
+	printf("Hello World 4-11\n");
+	using namespace std;
+
+	struct inflatable
+	{
+		char name[20];
+		float volume;
+		double price;
+	};
+
+	inflatable guest = {
+		"Glorious Gloria",
+		1.88,
+		29.99
+	};
+	inflatable pal = {
+		"Audacious Arthur",
+		3.12,
+		32.99
+	};
+
+	cout << guest.name << endl;
+	cout << pal.name << endl;
+	cout << guest.price + pal.price << endl;
+
+	return 0;
+}
+
+int listing4_12()
+{
+	printf("Hello World 4-12\n");
+	using namespace std;
+
+	struct inflatable
+	{
+		char name[20];
+		float volume;
+		double price;
+	};
+
+	inflatable bouquet = {
+		"sunflowers",
+		0.20,
+		12.49
+	};
+	inflatable choice;
+	cout << "bouquet: " << bouquet.name << " for $";
+	cout << bouquet.price << endl;
+	choice = bouquet; // assign one structure to another
+	cout << "choice: " << choice.name << " for $";
+	cout << choice.price << endl;
+
+	return 0;
+}
+
+int listing4_13()
+{
+	printf("Hello World 4-13\n");
+	using namespace std;
+
+	struct inflatable
+	{
+		char name[20];
+		float volume;
+		double price;
+	};
+
+	inflatable guests[2] = // initializing an array of structs
+	{
+		{"Bambi", 0.5, 21.99}, // first structure in array
+		{"Godzilla", 2000, 565.99} // next structure in array
+	};
+	cout << "The guests " << guests[0].name << " and " << guests[1].name
+		<< "\nhave a combined volume of "
+		<< guests[0].volume + guests[1].volume << " cubic feet.\n";
+
+	return 0;
+}

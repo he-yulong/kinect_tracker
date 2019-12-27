@@ -8,3 +8,6 @@ int listing4_7();
 int listing4_8();
 int listing4_9();
 int listing4_10();
+int listing4_11();
+int listing4_12();
+int listing4_13();

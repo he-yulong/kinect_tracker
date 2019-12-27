@@ -7,7 +7,8 @@ using std::string;
 #include <k4a/k4a.h>
 #include <k4abt.h>
 #include "szl/udp_sender.h"
-#include "szl/single_skeleton_processor.h"
+//#include "szl/single_skeleton_processor.h"
+#include "szl/quaternion_skeleton_processor.h"
 
 #define VERIFY(result, error)																				\
 	if (result != K4A_RESULT_SUCCEEDED)																		\
@@ -32,7 +33,8 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 	UDPSender udp_sender_sub = UDPSender(udp_ip_sub, udp_port_sub);
 	UDPSender udp_sender_master = UDPSender(udp_ip_master, udp_port_master);
 
-	// set configuration
+	// Set configuration
+	// k4a_device_configuration_t: Configuration parameters for an Azure Kinect device.
 	k4a_device_configuration_t config = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
 	config.camera_fps = K4A_FRAMES_PER_SECOND_30;
 	config.depth_mode = K4A_DEPTH_MODE_NFOV_UNBINNED;
@@ -64,8 +66,12 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 		"Get Master's calibration succeed.",
 		"Get Master's calibration failed!");
 
+	cout << "calibration sobordinate: " << sensor_calibration_sub.extrinsics << endl;
+	cout << "calibration master: " << &sensor_calibration_master.extrinsics << endl;
+
 	// tracker
 	k4abt_tracker_configuration_t tracker_config = K4ABT_TRACKER_CONFIG_DEFAULT;
+	tracker_config.processing_mode = K4ABT_TRACKER_PROCESSING_MODE_CPU;
 
 	k4abt_tracker_t tracker_sub = NULL;
 	VERIFY(k4abt_tracker_create(&sensor_calibration_sub, tracker_config, &tracker_sub), "Body tracker(Subordinate) initialization succeed.", "Body tracker(Subordinate) initialization failed!");
@@ -73,8 +79,10 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 	VERIFY(k4abt_tracker_create(&sensor_calibration_master, tracker_config, &tracker_master), "Body tracker(Master) initialization succeed.", "Body tracker(Master) initialization failed!");
 
 	int frame_count = 0;
+	// k4a_wait_result_t: Result code returned by Azure Kinect APIs.
 	k4a_wait_result_t get_capture_result_sub;
 	k4a_wait_result_t get_capture_result_master;
+	// k4a_capture_t: Handle to an Azure Kinect capture.
 	k4a_capture_t sensor_capture_sub;
 	k4a_capture_t sensor_capture_master;
 
@@ -116,7 +124,10 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 			}
 
 			k4abt_frame_t body_frame_sub = NULL;
+			// body_frame_sub: Handle to a k4a body tracking frame.
 			k4a_wait_result_t pop_frame_result_sub = k4abt_tracker_pop_result(tracker_sub, &body_frame_sub, K4A_WAIT_INFINITE);
+
+			vector<k4abt_joint_t> mSkeleton0;
 			if (pop_frame_result_sub == K4A_WAIT_RESULT_SUCCEEDED)
 			{
 				// Successfully popped the body tracking result. Start your processing
@@ -128,15 +139,41 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 				// Get skeletons. We only extract the first skeleton
 				if (num_bodies > 0)
 				{
-					k4abt_skeleton_t skeleton;
-					k4a_result_t skeleton_result = k4abt_frame_get_body_skeleton(body_frame_sub, 0, &skeleton);
+					// k4abt_skeleton_t: Structure to define joints for skeleton.
+					// --> k4abt_joint_t 	joints[K4ABT_JOINT_COUNT]
+					// k4abt_joint_t: Structure to define a single joint.
+					// --> k4a_float3_t/k4a_quaternion_t/k4abt_joint_confidence_level_t
+					k4abt_skeleton_t skeleton1;
+					// k4a_result_t: Result code returned by Azure Kinect APIs.
+					// --> K4A_RESULT_SUCCEEDED/K4A_RESULT_FAILED
+					k4a_result_t skeleton_result = k4abt_frame_get_body_skeleton(body_frame_sub, 0, &skeleton1);
 					if (skeleton_result == K4A_RESULT_SUCCEEDED)
 					{
+						/*P1: !!opencv - matrix
+						rows : 3
+						cols : 4
+						dt : d
+						data : [9.6122983480071571e+02, 0., 3.2602759008407593e+03, 0., 0.,
+						9.6122983480071571e+02, 5.7175109815597534e+02, 0., 0., 0., 1.,
+						0.]*/
+						//for (int i = 0; i < 32; i++) {
+						//	float x = 9.6122983480071571e+02 * skeleton.joints[i].position.xyz.x + 0 + 3.2602759008407593e+03 * skeleton.joints[i].position.xyz.z + 0;
+						//	float y = 0 + 9.6122983480071571e+02 * skeleton.joints[i].position.xyz.y + 5.7175109815597534e+02 * skeleton.joints[i].position.xyz.z + 0;
+						//	float z = 0 + 0 + 0 + 1;
+						//	skeleton.joints[i].position.xyz.x = x / 10000.;
+						//	skeleton.joints[i].position.xyz.y = y / 10000.;
+						//	skeleton.joints[i].position.xyz.z = z;
+						//}
+						//cout << skeleton.joints[2].position.xyz.x << endl;
+						
 						// Successfully get skeleton for the i-th person. Start processingS
-						SkeletonProcessor processor(skeleton);
+						//SkeletonProcessor processor(skeleton);
+						QuaternionSkeletonProcessor processor(skeleton1);
 
 						// Output joints
 						string skeleton_result = "";
+
+						
 						//if (FLAGS_all_joints) {
 						if (all_joints) {
 							skeleton_result = processor.FixView().ToString();
@@ -145,7 +182,10 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 							skeleton_result = processor.ToUnity().FixView().ToString();
 						}
 
+						mSkeleton0 = processor.mSkeleton;
+
 						// Send results with udp
+						cout << "------sub skeleton result-------" << endl;
 						udp_sender_sub.Send(skeleton_result);
 					}
 					else if (skeleton_result == K4A_RESULT_FAILED)
@@ -185,24 +225,46 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 				// Get skeletons. We only extract the first skeleton
 				if (num_bodies > 0)
 				{
-					k4abt_skeleton_t skeleton;
-					k4a_result_t skeleton_result = k4abt_frame_get_body_skeleton(body_frame_master, 0, &skeleton);
+					k4abt_skeleton_t skeleton2;
+					k4a_result_t skeleton_result = k4abt_frame_get_body_skeleton(body_frame_master, 0, &skeleton2);
 					if (skeleton_result == K4A_RESULT_SUCCEEDED)
 					{
+						
+
+						/*P2: !!opencv - matrix
+						   rows: 3
+						   cols: 4
+						   dt: d
+						   data: [ 9.6122983480071571e+02, 0., 3.2602759008407593e+03,
+							   -1.8990038594056032e+03, 0., 9.6122983480071571e+02,
+							   5.7175109815597534e+02, 0., 0., 0., 1., 0. ]
+						*/
+						//for (int i = 0; i < 32; i++) {
+						//	float x = 9.6122983480071571e+02 * skeleton.joints[i].position.xyz.x + 0 + 3.2602759008407593e+03 * skeleton.joints[i].position.xyz.z + -1.8990038594056032e+03;
+						//	float y = 0 + 9.6122983480071571e+02 * skeleton.joints[i].position.xyz.y + 5.7175109815597534e+02 * skeleton.joints[i].position.xyz.z + 0;
+						//	float z = 0 + 0 + skeleton.joints[i].position.xyz.z + 0;
+						//	skeleton.joints[i].position.xyz.x = x / 10000.;
+						//	skeleton.joints[i].position.xyz.y = y / 10000.;
+						//	skeleton.joints[i].position.xyz.z = z;
+						//}
+						//cout << skeleton.joints[2].position.xyz.x << endl;
+
 						// Successfully get skeleton for the i-th person. Start processingS
-						SkeletonProcessor processor(skeleton);
+						//SkeletonProcessor processor(skeleton);
+						QuaternionSkeletonProcessor processor(skeleton2);
 
 						// Output joints
 						string skeleton_result = "";
 						//if (FLAGS_all_joints) {
 						if (all_joints) {
-							skeleton_result = processor.FixView().ToString();
+							skeleton_result = processor.ToString(mSkeleton0);
 						}
 						else {
-							skeleton_result = processor.ToUnity().FixView().ToString();
+							skeleton_result = processor.ToUnity().FixView().ToString(mSkeleton0);
 						}
 
 						// Send results with udp
+						cout << "------master skeleton result-------" << endl;
 						udp_sender_master.Send(skeleton_result);
 					}
 					else if (skeleton_result == K4A_RESULT_FAILED)
