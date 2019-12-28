@@ -29,8 +29,6 @@ using szl_kinect::ArucoMarker;
 using szl_kinect::CalibIntrinsic;
 #include "szl/calib_stereo.h"
 using szl_kinect::CalibStereo;
-#include "szl/double_extrinsics.h"
-using szl_kinect::DoubleExtrinsics;
 #include "szl/image_writer.h"
 using szl_kinect::ImageWriter;
 
@@ -199,8 +197,8 @@ int main()
 			calib.Get();
 		}
 		else if (oper == "13") {
-			DoubleExtrinsics ex;
-			ex.Get();
+			/*DoubleExtrinsics ex;
+			ex.Get();*/
 		}
 		else if (oper == "14") {
 			ImageWriter writer;

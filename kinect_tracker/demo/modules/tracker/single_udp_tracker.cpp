@@ -32,7 +32,7 @@ int SingleUDPTracker::Run(string udp_ip, int udp_port, bool all_joints)
 	UDPSender udpSender(udp_ip, udp_port);
 
 	k4a_device_t device = NULL;
-	k4a_device_open(1, &device);
+	k4a_device_open(0, &device);
 
 	// Strart Camera. Make sure depth camera is enabled.
 	k4a_device_configuration_t deviceConfig = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
@@ -92,15 +92,15 @@ int SingleUDPTracker::Run(string udp_ip, int udp_port, bool all_joints)
 						string skeleton_result = "";
 						//if (FLAGS_all_joints) {
 						if (all_joints) {
-							cout << "????????" << processor.ToString(processor.mSkeleton) << "???????????" << endl;
+							cout << "????????" << processor.ToString() << "???????????" << endl;
 
-							skeleton_result = processor.FixView().ToString(processor.mSkeleton);
+							skeleton_result = processor.FixView().ToString();
 
 							cout << "????????" << skeleton_result << "???????????" << endl;
 							cout << "???????????????????" << endl;
 						}
 						else {
-							skeleton_result = processor.ToUnity().FixView().ToString(processor.mSkeleton);
+							skeleton_result = processor.ToUnity().FixView().ToString();
 						}
 
 						// Send results with udp

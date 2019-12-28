@@ -99,9 +99,6 @@
     <ClCompile Include="modules\tracker\double_udp_tracker.cpp">
       <Filter>Source Files\tracker</Filter>
     </ClCompile>
-    <ClCompile Include="modules\calibration\double_extrinsics.cpp">
-      <Filter>Source Files\calibration</Filter>
-    </ClCompile>
     <ClCompile Include="modules\calibration\aruco_marker.cpp">
       <Filter>Source Files\calibration</Filter>
     </ClCompile>
@@ -121,6 +118,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="dnn_model_2_0.onnx" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
@@ -159,9 +159,6 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\double_udp_tracker.h">
-      <Filter>Header Files\szl</Filter>
-    </ClInclude>
-    <ClInclude Include="include\szl\double_extrinsics.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\aruco_marker.h">
