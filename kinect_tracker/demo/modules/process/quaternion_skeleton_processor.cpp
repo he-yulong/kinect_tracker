@@ -231,3 +231,31 @@ string QuaternionSkeletonProcessor::ToString(vector<k4abt_joint_t> mSkeleton0) {
 
 	return ss.str();
 }
+
+string QuaternionSkeletonProcessor::ToString(vector<k4abt_joint_t> mSkeleton0, Matrix3f stereo_rotate) {
+	stringstream ss;
+	vector<k4abt_joint_t>::iterator iter;
+	for (iter = mSkeleton0.begin(); iter != mSkeleton0.end(); iter++) {
+		ss << iter->position.xyz.x << " ";
+		ss << iter->position.xyz.y << " ";
+		ss << iter->position.xyz.z << ", ";
+	}
+	// Output rotation
+	ss << "| ";
+
+	int k = 0;
+	for (iter = mSkeleton.begin(); iter != mSkeleton.end(); iter++) {
+		Quaternionf result = Quaternionf(mRotationMatrix) * Quaternionf(stereo_rotate) * Quaternionf(iter->orientation.wxyz.w, iter->orientation.wxyz.x, iter->orientation.wxyz.y, iter->orientation.wxyz.z);
+		ss << result.coeffs()(3, 0) << " ";
+		ss << result.coeffs()(0, 0) << " ";
+		ss << result.coeffs()(1, 0) << " ";
+		ss << result.coeffs()(2, 0) << ", ";
+
+		//ss << iter->orientation.wxyz.w << " ";
+		//ss << iter->orientation.wxyz.x << " ";
+		//ss << iter->orientation.wxyz.y << " ";
+		//ss << iter->orientation.wxyz.z << ", ";
+	}
+
+	return ss.str();
+}

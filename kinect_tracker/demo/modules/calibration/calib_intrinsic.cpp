@@ -91,11 +91,11 @@ int szl_kinect::CalibIntrinsic::Get()
 {
 	int board_width = 8;
 	int board_height = 6;
-	int num_imgs = 50;
+	int num_imgs = 20;
 	float square_size = 0.03;
-	string imgs_directory = "calib_imgs/5_1/";
-	string imgs_filename = "right";
-	string out_file = "cam_right.yml";
+	string imgs_directory = "calib_imgs/3/";
+	string imgs_filename = "left";
+	string out_file = "cam_left.yml";
 	string extension = "jpg";
 
 	//static struct poptOption options[] = {

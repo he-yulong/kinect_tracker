@@ -79,7 +79,7 @@ bool save_iw = true;
 
 int ImageWriter::Write()
 {
-	string save_dir = "calib_imgs/6";
+	string save_dir = "calib_imgs/3";
 
 	if (save_iw) {
 		MakeDirsIW(save_dir.c_str());
@@ -157,7 +157,7 @@ int ImageWriter::Write()
 				}
 			}
 		}
-	} while (frame_count < 50);
+	} while (frame_count < 20);
 
 	dev_sub.close();
 	dev_master.close();

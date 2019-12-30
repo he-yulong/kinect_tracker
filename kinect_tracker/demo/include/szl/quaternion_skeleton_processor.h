@@ -30,6 +30,7 @@ namespace szl_kinect {
 		QuaternionSkeletonProcessor& FixView();
 		string ToString();
 		string ToString(vector<k4abt_joint_t> mSkeleton0);
+		string ToString(vector<k4abt_joint_t> mSkeleton0, Matrix3f stereo_rotate);
 		vector<k4abt_joint_t> mSkeleton;
 
 	private:

@@ -86,6 +86,9 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 	k4a_capture_t sensor_capture_sub;
 	k4a_capture_t sensor_capture_master;
 
+	Matrix3f stereo_rotate;
+	stereo_rotate << 0.26021786, -0.00209256, 0.96554766, 0.10242372, 0.99441529, -0.02544836, -0.9601021, 0.1055171, 0.25897894;
+
 	do
 	{
 		get_capture_result_sub = k4a_device_get_capture(dev_sub, &sensor_capture_sub, 0);
@@ -255,9 +258,10 @@ int DoubleUDPTracker::Run(string udp_ip_sub, string udp_ip_master, int udp_port_
 
 						// Output joints
 						string skeleton_result = "";
+						
 						//if (FLAGS_all_joints) {
 						if (all_joints) {
-							skeleton_result = processor.ToString(mSkeleton0);
+							skeleton_result = processor.ToString(mSkeleton0, stereo_rotate);
 						}
 						else {
 							skeleton_result = processor.ToUnity().FixView().ToString(mSkeleton0);
