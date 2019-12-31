@@ -26,8 +26,8 @@ void load_image_points(int board_width, int board_height, int num_imgs, float sq
 
 	for (int i = 1; i <= num_imgs; i++) {
 		char left_img[100], right_img[100];
-		sprintf(left_img, "%s%s%d.%s", leftimg_dir, leftimg_filename, i, extension);
-		sprintf(right_img, "%s%s%d.%s", rightimg_dir, rightimg_filename, i, extension);
+		std::sprintf(left_img, "%s%s%d.%s", leftimg_dir, leftimg_filename, i, extension);
+		std::sprintf(right_img, "%s%s%d.%s", rightimg_dir, rightimg_filename, i, extension);
 		img1 = imread(left_img, IMREAD_COLOR);
 		img2 = imread(right_img, IMREAD_COLOR);
 		cvtColor(img1, gray1, CV_BGR2GRAY);

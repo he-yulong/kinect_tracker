@@ -114,10 +114,14 @@
     <ClCompile Include="modules\process\quaternion_skeleton_processor.cpp">
       <Filter>Source Files\process</Filter>
     </ClCompile>
+    <ClCompile Include="modules\calibration\double_calibration.cpp">
+      <Filter>Source Files\calibration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="dnn_model_2_0.onnx" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
@@ -175,6 +179,12 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\quaternion_skeleton_processor.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\double_calibration.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\kinect_utils.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

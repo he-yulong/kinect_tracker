@@ -32,7 +32,7 @@ using namespace std;
 		exit(1);																							\
 	}																										\
 
-int MakeDirsIW(const char* pDir)
+static int MakeDir(const char* pDir)
 {
 	int i = 0;
 	int iRet;
@@ -82,7 +82,7 @@ int ImageWriter::Write()
 	string save_dir = "calib_imgs/3";
 
 	if (save_iw) {
-		MakeDirsIW(save_dir.c_str());
+		MakeDir(save_dir.c_str());
 		cout << "Images saved in " << save_dir << endl;
 	}
 

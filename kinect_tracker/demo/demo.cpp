@@ -25,12 +25,8 @@ using szl_kinect::OfflineProcessor;
 using szl_kinect::DoubleUDPTracker;
 #include "szl/aruco_marker.h"
 using szl_kinect::ArucoMarker;
-#include "szl/calib_intrinsic.h"
-using szl_kinect::CalibIntrinsic;
-#include "szl/calib_stereo.h"
-using szl_kinect::CalibStereo;
-#include "szl/image_writer.h"
-using szl_kinect::ImageWriter;
+#include "szl/double_calibration.h"
+using szl_kinect::DoubleCalibration;
 
 
 int main()
@@ -53,9 +49,8 @@ int main()
 		cout << "9: to execute offline processing: mkv file to json file of tracking result." << endl;
 		cout << "10: to send two kinects' tracking data using UDP." << endl;
 		cout << "11: to test aruco marker demo." << endl;
-		cout << "12: to test chessboard calibration demo." << endl;
 		cout << "13: to get two kinects' extrinsics data." << endl;
-		cout << "14: to write images(use chessborad calibration)." << endl;
+		cout << "15: full-fleged stereo calibration(writing images, calibration of intrinsic and extrinsic parameters, stereo calibration)." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -191,18 +186,22 @@ int main()
 			//marker.PoseEstimate();
 			marker.DrawCube();
 		}
-		else if (oper == "12") {
-			//CalibIntrinsic calib;
-			CalibStereo calib;
-			calib.Get();
-		}
 		else if (oper == "13") {
 			/*DoubleExtrinsics ex;
 			ex.Get();*/
 		}
-		else if (oper == "14") {
-			ImageWriter writer;
-			writer.Write();
+		else if (oper == "15") {
+			DoubleCalibration cab = DoubleCalibration("calib_imgs/6");
+			if (true) {
+				cab.CollectColorImages();
+			}
+			if (true) {
+				cab.CalibrateIntrinsic();
+			}
+			if (true) {
+				cab.CalibrateStereo();
+			}
+			
 		}
 		else {
 			cout << "******************************************" << endl;
