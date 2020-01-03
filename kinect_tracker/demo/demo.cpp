@@ -27,6 +27,8 @@ using szl_kinect::DoubleUDPTracker;
 using szl_kinect::ArucoMarker;
 #include "szl/double_calibration.h"
 using szl_kinect::DoubleCalibration;
+#include "szl/several_quaternion_udp_tracker.h"
+using szl_kinect::SeveralQuaternionUDPTracker;
 
 
 int main()
@@ -49,8 +51,9 @@ int main()
 		cout << "9: to execute offline processing: mkv file to json file of tracking result." << endl;
 		cout << "10: to send two kinects' tracking data using UDP." << endl;
 		cout << "11: to test aruco marker demo." << endl;
-		cout << "13: to get two kinects' extrinsics data." << endl;
-		cout << "15: full-fleged stereo calibration(writing images, calibration of intrinsic and extrinsic parameters, stereo calibration)." << endl;
+		cout << "12: to get two kinects' extrinsics data." << endl;
+		cout << "13: full-fleged stereo calibration(writing images, calibration of intrinsic and extrinsic parameters, stereo calibration)." << endl;
+		cout << "14: to test fusion several kinects' quaternion." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -186,11 +189,11 @@ int main()
 			//marker.PoseEstimate();
 			marker.DrawCube();
 		}
-		else if (oper == "13") {
+		else if (oper == "12") {
 			/*DoubleExtrinsics ex;
 			ex.Get();*/
 		}
-		else if (oper == "15") {
+		else if (oper == "13") {
 			DoubleCalibration cab = DoubleCalibration("calib_imgs/6");
 			if (true) {
 				cab.CollectColorImages();
@@ -201,7 +204,10 @@ int main()
 			if (true) {
 				cab.CalibrateStereo();
 			}
-			
+		}
+		else if (oper == "14") {
+			SeveralQuaternionUDPTracker several_kinects = SeveralQuaternionUDPTracker(2, "127.0.0.1", 8999);
+			several_kinects.Run();
 		}
 		else {
 			cout << "******************************************" << endl;

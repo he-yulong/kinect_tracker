@@ -117,10 +117,14 @@
     <ClCompile Include="modules\calibration\double_calibration.cpp">
       <Filter>Source Files\calibration</Filter>
     </ClCompile>
+    <ClCompile Include="modules\tracker\several_quaternion_udp_tracker.cpp">
+      <Filter>Source Files\tracker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="dnn_model_2_0.onnx" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
@@ -185,6 +189,9 @@
       <Filter>Header Files\szl</Filter>
     </ClInclude>
     <ClInclude Include="include\szl\kinect_utils.h">
+      <Filter>Header Files\szl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\szl\several_quaternion_udp_tracker.h">
       <Filter>Header Files\szl</Filter>
     </ClInclude>
   </ItemGroup>

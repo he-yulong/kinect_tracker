@@ -332,6 +332,8 @@ int szl_kinect::DoubleCalibration::CalibrateStereo(int image_num)
 	fs1 << "Q" << Q;
 
 	printf("Done Rectification\n");
+
+	return 0;
 }
 
 
