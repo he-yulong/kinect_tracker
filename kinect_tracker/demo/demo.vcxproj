@@ -189,6 +189,7 @@
     <ClCompile Include="modules\third_party\k4a_opengl\viewerwindow.cpp" />
     <ClCompile Include="modules\tracker\double_tracker.cpp" />
     <ClCompile Include="modules\tracker\double_udp_tracker.cpp" />
+    <ClCompile Include="modules\tracker\several_quaternion_tracker_dumper.cpp" />
     <ClCompile Include="modules\tracker\several_quaternion_udp_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_udp_tracker.cpp" />
     <ClCompile Include="modules\tracker\single_skeleton_processor.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="include\szl\kinect_utils.h" />
     <ClInclude Include="include\szl\offline_processor.h" />
     <ClInclude Include="include\szl\quaternion_skeleton_processor.h" />
+    <ClInclude Include="include\szl\several_quaternion_tracker_dumper.h" />
     <ClInclude Include="include\szl\several_quaternion_udp_tracker.h" />
     <ClInclude Include="include\szl\single_skeleton_processor.h" />
     <ClInclude Include="include\szl\single_startup.h" />

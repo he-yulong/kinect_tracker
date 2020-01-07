@@ -89,9 +89,6 @@ int MakeDirs(const char* pDir)
 
 int SingleTrackerRecorder::Save()
 {
-	//// Parse args
-	//gflags::ParseCommandLineFlags(&argc, &argv, true);
-
 	// 获取时间，作为本次保存的文件夹名
 	struct tm ltm;
 	time_t now;

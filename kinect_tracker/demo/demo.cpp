@@ -29,6 +29,8 @@ using szl_kinect::ArucoMarker;
 using szl_kinect::DoubleCalibration;
 #include "szl/several_quaternion_udp_tracker.h"
 using szl_kinect::SeveralQuaternionUDPTracker;
+#include "szl/several_quaternion_tracker_dumper.h"
+using szl_kinect_dump::SeveralQuaternionTrackerDumper;
 
 
 int main()
@@ -54,6 +56,7 @@ int main()
 		cout << "12: to get two kinects' extrinsics data." << endl;
 		cout << "13: full-fleged stereo calibration(writing images, calibration of intrinsic and extrinsic parameters, stereo calibration)." << endl;
 		cout << "14: to test fusion several kinects' quaternion." << endl;
+		cout << "15: to dump fusion several kinects' quaternion to a CSV file." << endl;
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
@@ -194,7 +197,7 @@ int main()
 			ex.Get();*/
 		}
 		else if (oper == "13") {
-			DoubleCalibration cab = DoubleCalibration("calib_imgs/6");
+			DoubleCalibration cab = DoubleCalibration("calib_imgs/8");
 			if (true) {
 				cab.CollectColorImages();
 			}
@@ -208,6 +211,10 @@ int main()
 		else if (oper == "14") {
 			SeveralQuaternionUDPTracker several_kinects = SeveralQuaternionUDPTracker(2, "127.0.0.1", 8999);
 			several_kinects.Run();
+		}
+		else if (oper == "15") {
+			SeveralQuaternionTrackerDumper dumper = SeveralQuaternionTrackerDumper(2);
+			dumper.Run(100);
 		}
 		else {
 			cout << "******************************************" << endl;

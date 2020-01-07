@@ -192,33 +192,47 @@ void szl_kinect::SeveralQuaternionUDPTracker::close()
 	}
 }
 
-szl_kinect::TrackerProcessor::TrackerProcessor(Eigen::Matrix3f rotation_matrix) : rotation_matrix(rotation_matrix), mHasShift(false)
+// 初始化 TrackerProcessor
+// 只是简单地对 rotation_matrix 进行了赋值
+szl_kinect::TrackerProcessor::TrackerProcessor(Eigen::Matrix3f view_rotation) : view_rotation(view_rotation), qua_rotation(qua_rotation)
 {
 }
 
+// 接收 k4abt_skeleton_t 类型；返回对象本身
+// 利用 BodyTracking API 计算得到的 skeleton，对临时变量 tmp 进行赋值
+// 进而对 tmp 进行旋转和平移
+// 最后把 tmp 的坐标值赋值给 skeleton_matrix
+// 注意：skeleton_matrix 更新的仅仅是坐标值，四元数等信息并没有经过变换
 szl_kinect::TrackerProcessor& szl_kinect::TrackerProcessor::FixView(k4abt_skeleton_t skeleton)
 {
+	using Eigen::Matrix3Xf;
+
+	// 把 BodyTracking API 算出的关节点数据放到了 skeleton_matrix 中
+	// skeleton_matrix 是 vector<k4abt_joint_t> 类型的成员变量
 	for (int i = 0; i < K4ABT_JOINT_COUNT; i++) {
 		skeleton_matrix.push_back(skeleton.joints[i]);
 	}
 
-	// Get skeleton matrix
-	Eigen::Matrix3Xf tmp;
+	// 创建一个临时变量 tmp 用于保存关节点数据
+	// 把 skeleton_matrix 的节点 3D 位置赋值给 tmp
+	// 这里把 tmp(i, j) 中的 i 作为了 X、Y、Z，未来可能需要做优化
+	Matrix3Xf tmp;
 	tmp.resize(3, skeleton_matrix.size());
 	for (int i = 0; i < skeleton_matrix.size(); i++) {
 		tmp(0, i) = skeleton_matrix.at(i).position.xyz.x;
 		tmp(1, i) = skeleton_matrix.at(i).position.xyz.y;
 		tmp(2, i) = skeleton_matrix.at(i).position.xyz.z;
 	}
-	// Rotation
-	tmp = rotation_matrix * tmp;
+	
+	// 使用 TrackerProcessor 成员变量旋转矩阵对 tmp 进行旋转
+	tmp = view_rotation * tmp;
 
-	// Get the translation shift
+	// 计算平移量
+	// mHasShift 相当于开关，保证计算平移量的逻辑只进行一次。
 	if (!mHasShift) {
-		// Initialize mShift
-		float sumX = 0;
-		float sumY = 0;
-		float minZ = 9999;
+		float sumX = 0;  // 用于保存所有节点的 X 值的和
+		float sumY = 0;  // 用于保存所有节点的 Y 值的和
+		float minZ = 9999;  // 用于保存所有节点的 Z 值得最小值
 		for (int i = 0; i < tmp.cols(); i++) {
 			sumX += tmp(0, i);
 			sumY += tmp(1, i);
@@ -227,18 +241,21 @@ szl_kinect::TrackerProcessor& szl_kinect::TrackerProcessor::FixView(k4abt_skelet
 				minZ = tmp(2, i);
 			}
 		}
-		shift_matrix << -sumX / skeleton_matrix.size(), -sumY / skeleton_matrix.size(), -minZ;
+		shift_matrix << -sumX / skeleton_matrix.size(), -sumY / skeleton_matrix.size(), -minZ;  // 该平移矩阵是：-X平均值、-Y平均值、-Z最小值
+		// 关闭开关，该代码块的逻辑不会再调用
 		mHasShift = true;
 	}
 
-	// Translation
+	// 依次给每个列向量加上位移量
+	// 可优化
 	for (int i = 0; i < tmp.cols(); i++) {
 		tmp(0, i) += shift_matrix(0);
 		tmp(1, i) += shift_matrix(1);
 		tmp(2, i) += shift_matrix(2);
 	}
 
-	// Make change happen
+	// 用已经进行了旋转和平移的临时变量 tmp 对 skeleton_matrix 进行重新赋值
+	// 仅仅是坐标值，四元数等信息并没有经过调整
 	assert(skeleton_matrix.size() == tmp.cols());
 	for (int i = 0; i < skeleton_matrix.size(); i++) {
 		skeleton_matrix[i].position.xyz.x = tmp(0, i);
@@ -252,15 +269,17 @@ szl_kinect::TrackerProcessor& szl_kinect::TrackerProcessor::FixView(k4abt_skelet
 string szl_kinect::TrackerProcessor::ToString() {
 	std::stringstream ss;
 	vector<k4abt_joint_t>::iterator iter;
+
+	// 生成坐标值，此时坐标已经经过变换
 	for (iter = skeleton_matrix.begin(); iter != skeleton_matrix.end(); iter++) {
 		ss << iter->position.xyz.x << " ";
 		ss << iter->position.xyz.y << " ";
 		ss << iter->position.xyz.z << ", ";
 	}
-	// Output rotation
+	// 生成四元数，此时四元数未经过
 	ss << "| ";
 	for (iter = skeleton_matrix.begin(); iter != skeleton_matrix.end(); iter++) {
-		Eigen::Quaternionf result = Eigen::Quaternionf(rotation_matrix) * Eigen::Quaternionf(iter->orientation.wxyz.w, iter->orientation.wxyz.x, iter->orientation.wxyz.y, iter->orientation.wxyz.z);
+		Eigen::Quaternionf result = Eigen::Quaternionf(qua_rotation) * Eigen::Quaternionf(view_rotation) * Eigen::Quaternionf(iter->orientation.wxyz.w, iter->orientation.wxyz.x, iter->orientation.wxyz.y, iter->orientation.wxyz.z);
 		ss << result.coeffs()(3, 0) << " ";
 		ss << result.coeffs()(0, 0) << " ";
 		ss << result.coeffs()(1, 0) << " ";

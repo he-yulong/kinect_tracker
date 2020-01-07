@@ -40,7 +40,7 @@ namespace szl_kinect {
 	public:
 		DoubleCalibration(string save_dir = "calib_imgs/temp", string extension = "jpg");
 		int CollectColorImages(int image_num = 25, int sleep_time = 5000);
-		int CalibrateIntrinsic(int board_width = 8, int board_height = 6, int num_imgs = 20, float square_size = 0.03);
+		int CalibrateIntrinsic(int board_width = 8, int board_height = 6, int num_imgs = 25, float square_size = 0.03);
 		int CalibrateStereo(int image_num = 25);
 	private:
 		string save_dir;
