@@ -197,7 +197,7 @@ int main()
 			ex.Get();*/
 		}
 		else if (oper == "13") {
-			DoubleCalibration cab = DoubleCalibration("calib_imgs/8");
+			DoubleCalibration cab = DoubleCalibration("calib_imgs/9");
 			if (true) {
 				cab.CollectColorImages();
 			}
@@ -214,7 +214,11 @@ int main()
 		}
 		else if (oper == "15") {
 			SeveralQuaternionTrackerDumper dumper = SeveralQuaternionTrackerDumper(2);
-			dumper.Run(100);
+			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
+			int max_frame;
+			cin >> max_frame;
+			cout << endl;
+			dumper.Run(max_frame);
 		}
 		else {
 			cout << "******************************************" << endl;

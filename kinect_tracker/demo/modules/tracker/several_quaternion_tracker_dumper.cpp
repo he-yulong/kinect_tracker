@@ -88,13 +88,13 @@ void szl_kinect_dump::TrackerProcessor::RotateQuaternion(k4abt_skeleton_t* skele
 	//}
 
 	for (int i = 0; i < KINECT_JOINT_NUM; i++) {
-		Eigen::Quaternionf result = Eigen::Quaternionf(qua_rotation) * 
+		Eigen::Quaternionf result = Eigen::Quaternionf(view_rotation) * Eigen::Quaternionf(qua_rotation) *
+		//Eigen::Quaternionf result = Eigen::Quaternionf(qua_rotation) * Eigen::Quaternionf(view_rotation) *
 			Eigen::Quaternionf(skeleton->joints[i].orientation.wxyz.w, skeleton->joints[i].orientation.wxyz.x, skeleton->joints[i].orientation.wxyz.y, skeleton->joints[i].orientation.wxyz.z);
 		skeleton->joints[i].orientation.wxyz.w = result.coeffs().w();
 		skeleton->joints[i].orientation.wxyz.x = result.coeffs().x();
 		skeleton->joints[i].orientation.wxyz.y = result.coeffs().y();
 		skeleton->joints[i].orientation.wxyz.z = result.coeffs().z();
-		
 	}
 }
 
@@ -305,10 +305,11 @@ szl_kinect_dump::SeveralQuaternionTrackerDumper::SeveralQuaternionTrackerDumper(
 	Eigen::Matrix3f m2[2];
 	m[0] << 1, 0, 0, 0, -0.1736, 0.9848, 0, -0.9848, -0.1736;
 	m[1] << 1, 0, 0, 0, -0.1736, 0.9848, 0, -0.9848, -0.1736;
-	m2[0] << 1, 0, 0, 0, 1, 0, 0, 0, 1;
-	m2[1] << 1, 0, 0, 0, 1, 0, 0, 0, 1;
-	//m2[0] << 9.83844147e-01, -3.79407517e-02, 1.74960550e-01, 3.86502785e-02, 9.99252588e-01, -6.48466050e-04, -1.74805179e-01, 7.40026352e-03, 9.84575231e-01;
-	//m2[1] << 0.82355248, 0.09354985, -0.55947273, -0.09118149, 0.99531336, 0.03220652, 0.55986359, 0.0244898, 0.8282228;
+	m2[0] << 0.98486496, -0.01640388, 0.17254544, 0.01373559, 0.99976708, 0.01664696, -0.17277833, -0.01402499, 0.98486088;
+	//m2[0] << 1, 0, 0, 0, 1, 0, 0, 0, 1;
+	m2[1] << 8.18877299e-01, 3.96199618e-02, -5.72599535e-01, -4.88580353e-02, 9.98805443e-01, -7.61618621e-04, 5.71885357e-01, 2.85997605e-02, 8.19834857e-01;
+	//m2[1] << 1, 0, 0, 0, 1, 0, 0, 0, 1;
+	//m2[1] << 0.67419386, -0.10978471, 0.7303492,0.09096784, 0.99370414, 0.06539825,-0.73293076, 0.02234719, 0.67993611;
 	for (int i = 0; i < device_num; i++) {
 		several_kinects.emplace_back(QuaternionUDPTracker(i, m[i], m2[i], config));
 	}
@@ -346,7 +347,7 @@ int szl_kinect_dump::SeveralQuaternionTrackerDumper::Run(int max_frame)
 	out_file.open(save_dir + "/data.csv", ios::out); // 打开模式可省略
 	out_file << "device_timestamp," << "device_id," << "frame_id," << "node_id,"
 		<< "x," << "y," << "z,"
-		<< "qua_w," << "qua_y," << "qua_z," << "qua_x" << endl;
+		<< "qua_w," << "qua_x," << "qua_y," << "qua_z" << endl;
 
 	int frame_count = 0;
 	do
