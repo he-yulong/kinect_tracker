@@ -29,6 +29,7 @@ using std::vector;
 
 // 定义命名空间
 namespace szl_kinect_dump {
+	// 创建一个新目录
 	static string makeDir();
 
 	// TrackerProcessor 类用于处理原生跟踪数据，转换为客户端需要的跟踪数据

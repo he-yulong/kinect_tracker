@@ -237,7 +237,7 @@ void szl_kinect_dump::QuaternionUDPTracker::WriteCSV(std::ofstream* out_file, in
 static string szl_kinect_dump::makeDir()
 {
 	// 获取时间，作为本次保存的文件夹名
-	struct tm ltm;
+	tm ltm;
 	time_t now;
 	time(&now);
 	localtime_s(&ltm, &now);
@@ -350,7 +350,7 @@ int szl_kinect_dump::SeveralQuaternionTrackerDumper::Run(int max_frame)
 		<< "qua_w," << "qua_x," << "qua_y," << "qua_z" << endl;
 
 	int frame_count = 0;
-	do
+	while (frame_count < max_frame || max_frame == -1)
 	{
 		bool succeeded = true;
 		bool timeout = false;
@@ -389,7 +389,7 @@ int szl_kinect_dump::SeveralQuaternionTrackerDumper::Run(int max_frame)
 			break;
 		}
 
-	} while (frame_count < max_frame || max_frame == -1);
+	}
 
 	close();
 	out_file.close();  // 关闭 CSV 文件

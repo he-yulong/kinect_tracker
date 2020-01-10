@@ -60,23 +60,23 @@ int main()
 		cout << "q: to quit." << endl;
 		cout << "-----------------------------------------" << endl;
 		cin >> oper;
-		if (oper == "q") {
+		if ("q" == oper) {
 			cout << "ready to quit..." << endl;
 			break;
 		}
-		else if (oper == "0") {
+		else if ("0" == oper) {
 			SingleStartup kinect;
 			kinect.Run();
 		}
-		else if (oper == "1") {
+		else if ("1" == oper) {
 			SingleView kinect;
 			kinect.Show();
 		}
-		else if (oper == "2") {
+		else if ("2" == oper) {
 			DoubleView kinects;
 			kinects.Show();
 		}
-		else if (oper == "3") {
+		else if ("3" == oper) {
 			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
 			int max_frame;
 			cin >> max_frame;
@@ -84,7 +84,7 @@ int main()
 			SingleTracker kinect;
 			kinect.RunWithSimpleInformation(max_frame);
 		}
-		else if (oper == "4") {
+		else if ("4" == oper) {
 			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
 			int max_frame;
 			cin >> max_frame;
@@ -92,11 +92,11 @@ int main()
 			SingleTracker kinect;
 			kinect.RunWithDetailedInformation(max_frame);
 		}
-		else if (oper == "5") {
+		else if ("5" == oper) {
 			SingleTrackerRecorder kinect;
 			kinect.Save();
 		}
-		else if (oper == "6") {
+		else if ("6" == oper) {
 			string arg;
 
 			string ip_addr;
@@ -119,7 +119,7 @@ int main()
 			SingleUDPTracker kinect;
 			kinect.Run(ip_addr, port, true);
 		}
-		else if (oper == "7") {
+		else if ("7" == oper) {
 			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
 			int max_frame;
 			cin >> max_frame;
@@ -127,7 +127,7 @@ int main()
 			DoubleTracker kinects;
 			kinects.RunWithSimpleInformation(max_frame);
 		}
-		else if (oper == "8") {
+		else if ("8" == oper) {
 			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
 			int max_frame;
 			cin >> max_frame;
@@ -135,11 +135,11 @@ int main()
 			DoubleTracker kinects;
 			kinects.RunWithDetailedInformation(max_frame);
 		}
-		else if (oper == "9") {
+		else if ("9" == oper) {
 			OfflineProcessor processor;
 			processor.Run();
 		}
-		else if (oper == "10") {
+		else if ("10" == oper) {
 			string arg;
 
 			// sub
@@ -185,18 +185,18 @@ int main()
 			DoubleUDPTracker kinects;
 			kinects.Run(ip_addr_sub, ip_addr_master, port_sub, port_master, true, max_frame);
 		}
-		else if (oper == "11") {
+		else if ("11" == oper) {
 			ArucoMarker marker;
 			//marker.Create();
 			//marker.Calibrate();
 			//marker.PoseEstimate();
 			marker.DrawCube();
 		}
-		else if (oper == "12") {
+		else if ("12" == oper) {
 			/*DoubleExtrinsics ex;
 			ex.Get();*/
 		}
-		else if (oper == "13") {
+		else if ("13" == oper) {
 			DoubleCalibration cab = DoubleCalibration("calib_imgs/9");
 			if (true) {
 				cab.CollectColorImages();
@@ -208,11 +208,11 @@ int main()
 				cab.CalibrateStereo();
 			}
 		}
-		else if (oper == "14") {
+		else if ("14" == oper) {
 			SeveralQuaternionUDPTracker several_kinects = SeveralQuaternionUDPTracker(2, "127.0.0.1", 8999);
 			several_kinects.Run();
 		}
-		else if (oper == "15") {
+		else if ("15" == oper) {
 			SeveralQuaternionTrackerDumper dumper = SeveralQuaternionTrackerDumper(2);
 			cout << "Please set maximum frame(e.g. -1, 100, 200): ";
 			int max_frame;
