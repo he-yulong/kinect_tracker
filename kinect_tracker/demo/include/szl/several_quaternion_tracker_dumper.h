@@ -15,20 +15,14 @@ using std::vector;
 #include <sstream>
 #include <direct.h>
 #include <io.h>
-#include <ctime>
+#include <ctime>																 \
 
-
-// 验证函数
-#define VERIFY(result, msg, error)                                                                       \
-    if(result != K4A_RESULT_SUCCEEDED)                                                                   \
-    {                                                                                                    \
-        printf("%s \n - (File: %s, Function: %s, Line: %d)\n", error, __FILE__, __FUNCTION__, __LINE__); \
-        exit(1);                                                                                         \
-    }                                                                                                    \
-	printf("%s \n", msg);																				 \
 
 // 定义命名空间
 namespace szl_kinect_dump {
+	// 验证函数
+	inline void verify(k4a_result_t result, string msg, string error);
+
 	// 创建一个新目录
 	static string makeDir();
 

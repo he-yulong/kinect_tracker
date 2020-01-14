@@ -1,5 +1,17 @@
 ﻿#include "szl/several_quaternion_tracker_dumper.h"
 
+
+inline void szl_kinect_dump::verify(k4a_result_t result, string msg, string error)
+{
+	if (result != K4A_RESULT_SUCCEEDED)
+	{
+		cout << error << endl;
+		cout << " - (File: " << __FILE__ << ", Function: " << __FUNCTION__ << ", Line: " << __LINE__ << ")\n";
+		exit(1);
+	}
+	cout << msg << endl;
+}
+
 // 初始化 TrackerProcessor
 // 只是简单地对 rotation_matrix 和 qua_rotation 进行了赋值
 szl_kinect_dump::TrackerProcessor::TrackerProcessor(Eigen::Matrix3f view_rotation, Eigen::Matrix3f qua_rotation) : view_rotation(view_rotation), qua_rotation(qua_rotation)
@@ -130,20 +142,20 @@ void szl_kinect_dump::QuaternionUDPTracker::Open()
 {
 	// opening two k4a device
 	cout << device_index << ": Started opening K4A device..." << endl;
-	VERIFY(k4a_device_open(device_index, &device), "Open K4A Device succeed.", "Open K4A Device failed!");
-	VERIFY(k4a_device_start_cameras(device, &config), "Start K4A cameras succeed.", "Start K4A cameras failed!");
+	verify(k4a_device_open(device_index, &device), "Open K4A Device succeed.", "Open K4A Device failed!");
+	verify(k4a_device_start_cameras(device, &config), "Start K4A cameras succeed.", "Start K4A cameras failed!");
 	cout << device_index << ": Finished opening K4A device." << endl;
 }
 
 void szl_kinect_dump::QuaternionUDPTracker::Initialize()
 {
 	// Sensor calibration.
-	VERIFY(k4a_device_get_calibration(device, config.depth_mode, config.color_resolution, &sensor_calibration),
+	verify(k4a_device_get_calibration(device, config.depth_mode, config.color_resolution, &sensor_calibration),
 		"Get calibration succeed.",
 		"Get calibration failed!");
 
 	tracker_config.processing_mode = K4ABT_TRACKER_PROCESSING_MODE_GPU;
-	VERIFY(k4abt_tracker_create(&sensor_calibration, tracker_config, &tracker), "Body tracker initialization succeed.", "Body tracker initialization failed!");
+	verify(k4abt_tracker_create(&sensor_calibration, tracker_config, &tracker), "Body tracker initialization succeed.", "Body tracker initialization failed!");
 }
 
 void szl_kinect_dump::QuaternionUDPTracker::Close()
