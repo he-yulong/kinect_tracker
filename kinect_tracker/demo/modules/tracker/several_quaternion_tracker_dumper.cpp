@@ -1,17 +1,6 @@
 ﻿#include "szl/several_quaternion_tracker_dumper.h"
 
 
-inline void szl_kinect_dump::verify(k4a_result_t result, string msg, string error)
-{
-	if (result != K4A_RESULT_SUCCEEDED)
-	{
-		cout << error << endl;
-		cout << " - (File: " << __FILE__ << ", Function: " << __FUNCTION__ << ", Line: " << __LINE__ << ")\n";
-		exit(1);
-	}
-	cout << msg << endl;
-}
-
 // 初始化 TrackerProcessor
 // 只是简单地对 rotation_matrix 和 qua_rotation 进行了赋值
 szl_kinect_dump::TrackerProcessor::TrackerProcessor(Eigen::Matrix3f view_rotation, Eigen::Matrix3f qua_rotation) : view_rotation(view_rotation), qua_rotation(qua_rotation)

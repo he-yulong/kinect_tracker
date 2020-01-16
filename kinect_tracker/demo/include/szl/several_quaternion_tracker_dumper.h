@@ -21,7 +21,16 @@ using std::vector;
 // 定义命名空间
 namespace szl_kinect_dump {
 	// 验证函数
-	inline void verify(k4a_result_t result, string msg, string error);
+	inline void verify(k4a_result_t result, string msg, string error)
+	{
+		if (result != K4A_RESULT_SUCCEEDED)
+		{
+			cout << error << endl;
+			cout << " - (File: " << __FILE__ << ", Function: " << __FUNCTION__ << ", Line: " << __LINE__ << ")\n";
+			exit(1);
+		}
+		cout << msg << endl;
+	}
 
 	// 创建一个新目录
 	static string makeDir();
