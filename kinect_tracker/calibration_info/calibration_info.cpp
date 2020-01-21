@@ -40,7 +40,7 @@ static string get_serial(k4a_device_t device)
     return s;
 }
 
-// 打印一堆内参
+// 打印一堆内参：深度摄像头标定
 static void print_calibration()
 {
     uint32_t device_count = k4a_device_get_installed_count();
