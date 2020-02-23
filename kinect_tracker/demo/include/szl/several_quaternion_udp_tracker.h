@@ -33,7 +33,7 @@ namespace szl_kinect {
 		// 一种简单的实现是把其中一个 Kinect 的相机坐标系定义为世界坐标系
 		TrackerProcessor(Eigen::Matrix3f view_rotation);
 		// ?????
-		TrackerProcessor&  Process(k4abt_skeleton_t skeleton);
+		TrackerProcessor& Process(k4abt_skeleton_t skeleton);
 		// FixView 方法用于调整视图，经过一定的旋转和平移，使得客户端视角可以方便地看到人物。
 		TrackerProcessor& FixView(k4abt_skeleton_t skeleton);
 		// 给出客户端所需要的字符串
